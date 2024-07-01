@@ -1,0 +1,301 @@
+{% extends 'basic-structure-w-footer.html' %} {% block title %}
+<title>Datos de {{ datos_usuario.user.first_name }} | Fedeteria</title>
+{% endblock %} {% block main %} {% load static %}
+<div class="bg-white">
+  <div class="relative">
+    <section
+      class="mx-auto max-w-[95vw] flex flex-col-reverse w-full gap-y-8 px-4 sm:px-6 lg:grid lg:max-w-[90vw] lg:grid-cols-12 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8"
+    >
+      <div class="lg:mx-10 sm:col-span-9">
+        <h2
+          class="ml-0 sm:ml-8 mb-4 text-center sm:text-left text-2xl font-bold underline tracking-tight text-neutral-900"
+        >
+          Productos del usuario
+        </h2>
+        {% if productos %}
+        <div
+          class="mt-6 grid grid-cols-1 gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8"
+        >
+          {% for producto in productos %}
+          <div
+            class="group flex flex-col items-center justify-center w-full max-w-sm mx-auto"
+          >
+            <div
+              class="w-full h-80 bg-neutral-300 bg-center bg-cover rounded-xl shadow-lg"
+              style="
+                background-image: url('/media/{{ producto.imagen.image }}')"
+            ></div>
+
+            <div
+              class="max-w-fit min-w-64 origin-bottom w-full -mt-10 transition-all overflow-hidden rounded-xl shadow-md bg-neutral-700/60 backdrop-blur"
+            >
+              <h3
+                class="py-2 px-3 font-medium truncate text-center uppercase text-white"
+              >
+                {{producto.p.nombre}}
+              </h3>
+
+              <div
+                class="flex items-center justify-between gap-2 px-3 py-2 bg-neutral-800 group-hover:bg-neutral-800/70 transition-colors"
+              >
+                <span class="font-bold text-neutral-300">
+                  {% if producto.p.cat_precio is None %}
+                  <!--  -->
+                  ---
+                  <!--  -->
+                  {% else %}
+                  <!--  -->
+                  clase {{ producto.p.cat_precio.nombre }}
+                  <!--  -->
+                  {% endif %}</span
+                >
+
+                <a
+                  href="/productos/producto/{{producto.p.id}}"
+                  class="group/link flex items-center px-2 py-1 text-xs text-orange-600 uppercase transition-colors duration-300 transform bg-orange-200 rounded hover:bg-orange-400 hover:text-orange-900 focus:bg-orange-400 focus:outline-none"
+                >
+                  Ver producto
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-5 h-5 transition-all duration-100 ease-in group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M17 7l-10 10" />
+                    <path d="M8 7l9 0l0 9" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+          <!-- More products... -->
+        </div>
+
+        {% else %}
+        <div
+          class="max-w-[95vw] mx-auto sm:max-w-5xl w-full py-8 px-2 sm:px-16 rounded-lg"
+        >
+          <div
+            class="min-h-64 py-8 px-8 w-full flex flex-col items-center gap-2"
+          >
+            <p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-24 w-24 text-neutral-600"
+              >
+                <path
+                  stroke="none"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                <path d="M9 13h.01" />
+                <path d="M15 13h.01" />
+                <path d="M11 17h2" />
+              </svg>
+            </p>
+            <h3 class="text-lg text-center font-medium text-neutral-600">
+              Te pedimos disculpas pero el usuario que estas viendo no tiene
+              publicaciones en nuestra web.
+            </h3>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- datos del usuario -->
+      <div class="mt-12 sm:col-span-3 lg:flex lg:mt-0 lg:flex-col lg:items-center lg:mx-10">
+        <img
+          class="object-cover sm:max-w-64 w-full sm:aspect-square rounded-md shrink-0 ring-4 ring-gray-300"
+          src="/static{{datos_usuario.avatar}}"
+          alt="avatar usuario"
+        />
+        <div class="flex flex-col gap-4 py-4 px-2 rounded-lg">
+          <div class="flex items-center">
+            <div class="flex flex-col mx-2">
+              <h1 class="font-bold text-3xl text-gray-800">
+                {{datos_usuario.user.first_name}}
+                {{datos_usuario.user.last_name}}
+              </h1>
+              <!-- <h5 class="mt-8 text-sm underline text-gray-500">
+                Datos de contacto:
+              </h5>
+              <p class="mt-2 text-lg text-gray-700 flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="shrink-0 h-5 w-5 text-orange-300"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"
+                  />
+                  <path d="M3 7l9 6l9 -6" />
+                </svg>
+                <span>{{ datos_usuario.user.email }}</span>
+              </p>
+              <p class="mt-2 text-lg text-gray-700 flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="shrink-0 h-5 w-5 text-orange-300"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"
+                  />
+                </svg>
+                <span>{{datos_usuario.usuario.telefono}}</span>
+              </p> -->
+            </div>
+          </div>
+
+          <div class="flex w-full items-center py-1 px-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="mt-0.5 shrink-0 h-5 w-5"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path d="M12 18.5l-3 -1.5l-6 3v-13l6 -3l6 3l6 -3v7.5" />
+              <path d="M9 4v13" />
+              <path d="M15 7v5.5" />
+              <path
+                d="M21.121 20.121a3 3 0 1 0 -4.242 0c.418 .419 1.125 1.045 2.121 1.879c1.051 -.89 1.759 -1.516 2.121 -1.879z"
+              />
+              <path d="M19 18v.01" />
+            </svg>
+            <p class="ms-3 text-neutral-800">
+              <span class="block text-sm opacity-70">
+                Sucursal preferida:
+              </span>
+              <span class="block text-sm font-semibold">
+                {{datos_usuario.sucursal.localidad}}
+                </span>
+                <!-- <span class="block opacity-60 text-xs m-0"
+                  >{{datos_usuario.sucursal.direccion}}</span
+                > -->
+            </p>
+          </div>
+          <div class="flex w-full items-center py-1 px-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="mt-0.5 shrink-0 h-5 w-5"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h.5" />
+              <path
+                d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z"
+              />
+            </svg>
+            <p class="ms-3 text-neutral-800">
+              <span class="block text-sm opacity-70"> Valoracion: </span>
+              <span class="flex items-center text-sm font-semibold">
+                {% if datos_usuario.usuario.calificacion is None or datos_usuario.usuario.num_calificaciones == 0 %}
+                  Sin calificacion
+                {% else %}
+                <span class="opacity-100 text-sm">{{datos_usuario.usuario.calificacion}} </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="mt-0.5 shrink-0 h-4 w-4 fill-orange-200 stroke-orange-400"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"
+                  />
+                </svg> 
+                
+                <span class="opacity-60 text-xs ml-2">
+                  - {{datos_usuario.usuario.num_calificaciones}} calificaciones
+                </span>
+                {% endif %}
+                
+
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

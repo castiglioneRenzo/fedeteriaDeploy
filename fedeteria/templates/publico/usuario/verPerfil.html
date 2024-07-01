@@ -1,0 +1,78 @@
+{% extends 'basic-structure-w-sidebar.html' %} {% block title %}
+<title>Ver Perfil | Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<a
+  href="/perfil"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Perfil
+</a>
+
+{% endblock %} {% block main %} {% load static %}
+<div class="flex items-center">
+  <div class="border rounded-md p-8 bg-gray-100 shadow-md md:px-32 md:py-8">
+    <div class="container mx-auto p-4 flex items-center justify-center">
+      <img
+        src="/static{{ usuario.avatar }}"
+        class="w-32 h-32 md:w-48 md:h-48 object-cover object-center ring-2 ring-orange-300 rounded-lg"
+      />
+    </div>
+    <br />
+    <ul class="flex flex-col items-center">
+      <li>
+        <h2 class="text-2xl font-semibold text-center">
+          {{ user.first_name }} {{ user.last_name }}
+        </h2>
+        <br />
+      </li>
+      <li>
+        <p class="text-gray-600 text-center">
+          DNI: <strong>{{ user.username }}</strong>
+        </p>
+      </li>
+      <li>
+        <p class="text-gray-600 text-center">
+          Fecha de nacimiento:
+          <strong>{{ usuario.fecha_nacimiento|date:"d M Y" }}</strong>
+        </p>
+      </li>
+      <li>
+        <p class="text-gray-600 text-center">
+          Email: <strong>{{ user.email }}</strong>
+        </p>
+      </li>
+      <li>
+        <p class="text-gray-600 text-center">
+          Tel.: <strong>{{ usuario.telefono }}</strong>
+        </p>
+      </li>
+      <li>
+        <p class="text-gray-600 text-center">Sucursal elegida:</p>
+        <div
+          class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3"
+        >
+          <p class="ms-3 select-none text-neutral-800">
+            <span class="block text-sm font-semibold">
+              {{ sucursal.localidad }}
+            </span>
+            <span class="block text-sm opacity-70">
+              {{ sucursal.direccion }}
+            </span>
+          </p>
+        </div>
+      </li>
+      <li>
+        <nav>
+          <a href="/perfil/cambiarcontrasenia">
+            <button
+              class="bg-orange-300 transition-colors hover:bg-orange-200 text-gray-700 font-semibold py-2 px-6 rounded-md mt-4 align-center"
+            >
+              Cambiar Contraseña
+            </button>
+          </a>
+        </nav>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

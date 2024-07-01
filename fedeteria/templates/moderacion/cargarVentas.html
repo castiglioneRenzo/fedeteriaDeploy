@@ -1,0 +1,59 @@
+{% extends 'basic-structure-moderacion.html' %}{% block title %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>Cargar Ventas | Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<a
+  href="/moderacion"
+  class="font-semibold text-neutral-400 hover:underline"
+>
+  Moderacion
+</a>
+
+<span class="mx-5 font-bold text-neutral-500"> / </span>
+
+<a
+  href="/moderacion/trueques-en-proceso"
+  class="font-semibold text-neutral-400 hover:underline"
+>
+  Cargar ventas
+</a>
+{% endblock %}
+{% block main %}
+<a href="/moderacion">
+    <button class="absolute top-36 left-96 bg-orange-300 text-black px-4 hover:bg-orange-400 py-2 rounded-md" type="button">Salir</button>
+</a>
+{% if messages %} {% for message in messages %}
+  <div>
+    <div
+      class="alert bg-green-500 text-white p-4 rounded-lg shadow-md"
+      role="alert"
+    >
+      {{ message }}
+    </div>
+  </div>
+  {% endfor %} {% endif %}
+
+  <script>
+    $(document).ready(function() {
+      setTimeout(function() {
+        $(".alert").fadeOut();
+      }, 2000);
+    });
+    </script>
+<form method="POST">
+    {% csrf_token %}
+    <div class="border rounded-md p-8 bg-gray-200 shadow-md md:px-32 md:py-10">
+        <label class="block text-sm font-medium leading-6 text-neutral-900" for="id_producto">ID de Producto:</label>
+        <input class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6" type="text" id="id_producto" name="id_producto" required>
+        <br>
+        <label class="block text-sm font-medium leading-6 text-neutral-900" for="cantidad_vendida">Cantidad Vendida:</label>
+        <input class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6" type="text" id="cantidad_vendida" name="cantidad_vendida" required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+        <br>
+        <label class="block text-sm font-medium leading-6 text-neutral-900" for="precio_por_unidad">Precio por Unidad:</label>
+        <input class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6" type="text" id="precio_por_unidad" name="precio_por_unidad" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+        <button class="block w-full bg-orange-300 hover:bg-orange-400 rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-400 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6 text-black font-bold" type="submit">Agregar Venta</button>
+    </div>
+</form>
+<br>
+
+{% endblock %}

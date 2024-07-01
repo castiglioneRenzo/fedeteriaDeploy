@@ -1,0 +1,1186 @@
+{% extends 'basic-structure-w-sidebar.html' %}{% block title %}
+<title>Editar mi perfil | Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<a
+  href="/perfil"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Perfil
+</a>
+
+<span class="mx-5 font-bold text-gray-500"> / </span>
+
+<a
+  href="/perfil/editar"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Editar perfil
+</a>
+{% endblock %} {% block main %}
+<div
+  class="my-auto flex min-h-full flex-col justify-center max-w-[95vw] sm:max-w-5xl w-full border py-8 px-16 rounded-lg bg-gray-100 shadow-md"
+>
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-2xl">
+    <form
+      action="{% url 'publico:editarPerfil' %}"
+      method="post"
+      autocomplete="on"
+    >
+      {% csrf_token %}
+      <div class="space-y-12">
+        <div class="border-b border-neutral-900/10 pb-12">
+          <h2 class="text-base font-semibold leading-7 text-neutral-900">
+            Editá tus datos
+          </h2>
+          {% if messages %} {% for message in messages %}
+          <div>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div
+              class="bg-red-500 text-white p-4 rounded-lg shadow-md"
+              role="alert"
+            >
+              {{ message }}
+            </div>
+            {% else %}
+            <div
+              class="bg-green-500 text-white p-4 rounded-lg shadow-md"
+              role="alert"
+            >
+              {{ message }}
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %} {% endif %}
+        </div>
+        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="col-span-full border-y pt-2 pb-4">
+            <legend class="text-base font-semibold leading-6 text-neutral-900">
+              Avatar
+            </legend>
+            <p class="mt-1 text-sm leading-6 text-neutral-600">
+              Cambia tu imagen de perfil.
+            </p>
+            <div class="my-2 flex items-center gap-x-3">
+              <div
+                role="list"
+                class="grid grid-cols-4 sm:grid-cols-6 gap-4 justify-around items-center"
+              >
+                <label
+                  for="avatar-1"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  {% if usuario.avatar == "/avatars/avatar_1.avif" %}
+                  <input
+                    type="radio"
+                    id="avatar-1"
+                    value="/avatars/avatar_1.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    checked="true"
+                    required
+                  />
+                  {% else %}
+                  <input
+                    type="radio"
+                    id="avatar-1"
+                    value="/avatars/avatar_1.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  {% endif %}
+                  <img
+                    src="/static/avatars/avatar_1.avif"
+                    alt="Avatar imagen numero 1"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+                <label
+                  for="avatar-2"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  {% if usuario.avatar == "/avatars/avatar_2.avif" %}
+                  <input
+                    type="radio"
+                    id="avatar-2"
+                    value="/avatars/avatar_2.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    checked="true"
+                    required
+                  />
+                  {% else %}
+                  <input
+                    type="radio"
+                    id="avatar-2"
+                    value="/avatars/avatar_2.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  {% endif %}
+                  <img
+                    src="/static/avatars/avatar_2.avif"
+                    alt="Avatar imagen numero 2"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+                <label
+                  for="avatar-3"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  {% if usuario.avatar == "/avatars/avatar_3.avif" %}
+                  <input
+                    type="radio"
+                    id="avatar-3"
+                    value="/avatars/avatar_3.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    checked="true"
+                    required
+                  />
+                  {% else %}
+                  <input
+                    type="radio"
+                    id="avatar-3"
+                    value="/avatars/avatar_3.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  {% endif %}
+                  <img
+                    src="/static/avatars/avatar_3.avif"
+                    alt="Avatar imagen numero 3"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+                <label
+                  for="avatar-4"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  {% if usuario.avatar == "/avatars/avatar_4.avif" %}
+                  <input
+                    type="radio"
+                    id="avatar-4"
+                    value="/avatars/avatar_4.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    checked="true"
+                    required
+                  />
+                  {% else %}
+                  <input
+                    type="radio"
+                    id="avatar-4"
+                    value="/avatars/avatar_4.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  {% endif %}
+                  <img
+                    src="/static/avatars/avatar_4.avif"
+                    alt="Avatar imagen numero 4"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+                <label
+                  for="avatar-5"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  {% if usuario.avatar == "/avatars/avatar_5.avif" %}
+                  <input
+                    type="radio"
+                    id="avatar-5"
+                    value="/avatars/avatar_5.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    checked="true"
+                    required
+                  />
+                  {% else %}
+                  <input
+                    type="radio"
+                    id="avatar-5"
+                    value="/avatars/avatar_5.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  {% endif %}
+                  <img
+                    src="/static/avatars/avatar_5.avif"
+                    alt="Avatar imagen numero 5"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+                <label
+                  for="avatar-6"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  {% if usuario.avatar == "/avatars/avatar_6.avif" %}
+                  <input
+                    type="radio"
+                    id="avatar-6"
+                    value="/avatars/avatar_6.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    checked="true"
+                    required
+                  />
+                  {% else %}
+                  <input
+                    type="radio"
+                    id="avatar-6"
+                    value="/avatars/avatar_6.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  {% endif %}
+                  <img
+                    src="/static/avatars/avatar_6.avif"
+                    alt="Avatar imagen numero 6"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <label
+              for="first-name"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              Nombre
+            </label>
+            <div class="mt-2">
+              <input
+                type="text"
+                minlength="3"
+                maxlength="128"
+                name="first-name"
+                id="first-name"
+                placeholder="Hugo"
+                value="{{ user.first_name }}"
+                autocomplete="given-name"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label
+              for="last-name"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              Apellido
+            </label>
+            <div class="mt-2">
+              <input
+                type="text"
+                minlength="3"
+                maxlength="128"
+                name="last-name"
+                id="last-name"
+                value="{{ user.last_name }}"
+                placeholder="Bermudez"
+                autocomplete="family-name"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label
+              for="born"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              Fecha de nacimiento
+            </label>
+            <div class="mt-2">
+              <input
+                id="born"
+                name="born"
+                type="date"
+                value="{{ usuario.fecha_nacimiento|date:'Y-m-d' }}"
+                autocomplete="fecha-nacimiento"
+                min="1950-01-01"
+                max="2024-01-01"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+          <div class="sm:col-span-4">
+            <label
+              for="email"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              Email
+            </label>
+            <div class="mt-2">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value="{{ user.email }}"
+                placeholder="example@host.com"
+                autocomplete="email"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label
+              for="city"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              Numero de telefono
+            </label>
+            <div class="mt-2">
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                pattern="[0-9]{3,5}[0-9]{6}"
+                inputmode="numeric"
+                value="{{ usuario.telefono }}"
+                placeholder="xxxx xxxxxx"
+                autocomplete="tel"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+          <div class="sm:col-span-3"></div>
+        </div>
+
+        <div class="pb-12">
+          <div class="mt-10 space-y-10">
+            <fieldset>
+              <legend
+                class="text-base font-semibold leading-6 text-neutral-900"
+              >
+                Sucursal actual
+              </legend>
+              <div class="grid gap-2 sm:grid-cols-2">
+                <label
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-gray-300 p-3"
+                >
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      {{ usuario.sucursal.localidad }}
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      {{ usuario.sucursal.direccion }}
+                    </span>
+                  </p>
+                </label>
+              </div>
+              <legend
+                class="text-base font-semibold leading-6 text-neutral-900"
+              >
+                Sucursal preferida
+              </legend>
+              <p class="mt-1 text-sm leading-6 text-neutral-600">
+                Selecciona una sucursal de la lista.
+              </p>
+              <div class="grid gap-2 sm:grid-cols-2">
+                {% if usuario.sucursal_id == 1 %}
+                <label
+                  for="sucursal-la-plata"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-la-plata"
+                    value="2"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> La Plata </span>
+                    <span class="block text-sm opacity-70">
+                      Calle 55, 483 e/ 4 y 5
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-chivilcoy"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-chivilcoy"
+                    value="3"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> Chivilcoy </span>
+                    <span class="block text-sm opacity-70">
+                      25 de mayo, altura 212
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-dolores"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-dolores"
+                    value="4"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> Dolores </span>
+                    <span class="block text-sm opacity-70">
+                      Bartolomé Mitre, num. 76
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-berazategui"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-berazategui"
+                    value="5"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Berazategui
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. 21, num. 3955
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-bahia-blanca"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-bahia-blanca"
+                    value="6"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Bahia Blanca
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. Leandro Niceforo Alem, num. 455
+                    </span>
+                  </p>
+                </label>
+                {% elif usuario.sucursal_id == 2 %}
+                <label
+                  for="sucursal-capital-federal"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has- [:checked] :border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-capital-federal"
+                    value="1"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Capital Federal
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. Monroe, num. 1428
+                    </span>
+                  </p>
+                </label>
+                <label
+                  for="sucursal-chivilcoy"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-chivilcoy"
+                    value="3"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> Chivilcoy </span>
+                    <span class="block text-sm opacity-70">
+                      25 de mayo, altura 212
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-dolores"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-dolores"
+                    value="4"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> Dolores </span>
+                    <span class="block text-sm opacity-70">
+                      Bartolomé Mitre, num. 76
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-berazategui"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-berazategui"
+                    value="5"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Berazategui
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. 21, num. 3955
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-bahia-blanca"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-bahia-blanca"
+                    value="6"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Bahia Blanca
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. Leandro Niceforo Alem, num. 455
+                    </span>
+                  </p>
+                </label>
+                {% elif usuario.sucursal_id == 3 %}
+                <label
+                  for="sucursal-capital-federal"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has- [:checked] :border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-capital-federal"
+                    value="1"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Capital Federal
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. Monroe, num. 1428
+                    </span>
+                  </p>
+                </label>
+                <label
+                  for="sucursal-la-plata"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-la-plata"
+                    value="2"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> La Plata </span>
+                    <span class="block text-sm opacity-70">
+                      Calle 55, 483 e/ 4 y 5
+                    </span>
+                  </p>
+                </label>
+                <label
+                  for="sucursal-dolores"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-dolores"
+                    value="4"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> Dolores </span>
+                    <span class="block text-sm opacity-70">
+                      Bartolomé Mitre, num. 76
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-berazategui"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-berazategui"
+                    value="5"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Berazategui
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. 21, num. 3955
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-bahia-blanca"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-bahia-blanca"
+                    value="6"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Bahia Blanca
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. Leandro Niceforo Alem, num. 455
+                    </span>
+                  </p>
+                </label>
+                {% elif usuario.sucursal_id == 4 %}
+                <label
+                  for="sucursal-capital-federal"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has- [:checked] :border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-capital-federal"
+                    value="1"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Capital Federal
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. Monroe, num. 1428
+                    </span>
+                  </p>
+                </label>
+                <label
+                  for="sucursal-la-plata"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-la-plata"
+                    value="2"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> La Plata </span>
+                    <span class="block text-sm opacity-70">
+                      Calle 55, 483 e/ 4 y 5
+                    </span>
+                  </p>
+                </label>
+                <label
+                  for="sucursal-chivilcoy"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-chivilcoy"
+                    value="3"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> Chivilcoy </span>
+                    <span class="block text-sm opacity-70">
+                      25 de mayo, altura 212
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-berazategui"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-berazategui"
+                    value="5"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Berazategui
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. 21, num. 3955
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-bahia-blanca"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-bahia-blanca"
+                    value="6"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Bahia Blanca
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. Leandro Niceforo Alem, num. 455
+                    </span>
+                  </p>
+                </label>
+                {% elif usuario.sucursal_id == 5 %}
+                <label
+                  for="sucursal-capital-federal"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has- [:checked] :border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-capital-federal"
+                    value="1"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Capital Federal
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. Monroe, num. 1428
+                    </span>
+                  </p>
+                </label>
+                <label
+                  for="sucursal-la-plata"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-la-plata"
+                    value="2"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> La Plata </span>
+                    <span class="block text-sm opacity-70">
+                      Calle 55, 483 e/ 4 y 5
+                    </span>
+                  </p>
+                </label>
+                <label
+                  for="sucursal-dolores"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-dolores"
+                    value="4"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> Dolores </span>
+                    <span class="block text-sm opacity-70">
+                      Bartolomé Mitre, num. 76
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-chivilcoy"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-chivilcoy"
+                    value="3"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> Chivilcoy </span>
+                    <span class="block text-sm opacity-70">
+                      25 de mayo, altura 212
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-bahia-blanca"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-bahia-blanca"
+                    value="6"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Bahia Blanca
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. Leandro Niceforo Alem, num. 455
+                    </span>
+                  </p>
+                </label>
+                {% elif usuario.sucursal_id == 6 %}
+                <label
+                  for="sucursal-capital-federal"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has- [:checked] :border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-capital-federal"
+                    value="1"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Capital Federal
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. Monroe, num. 1428
+                    </span>
+                  </p>
+                </label>
+                <label
+                  for="sucursal-la-plata"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-la-plata"
+                    value="2"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> La Plata </span>
+                    <span class="block text-sm opacity-70">
+                      Calle 55, 483 e/ 4 y 5
+                    </span>
+                  </p>
+                </label>
+                <label
+                  for="sucursal-dolores"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-dolores"
+                    value="4"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> Dolores </span>
+                    <span class="block text-sm opacity-70">
+                      Bartolomé Mitre, num. 76
+                    </span>
+                  </p>
+                </label>
+
+                <label
+                  for="sucursal-chivilcoy"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-chivilcoy"
+                    value="3"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold"> Chivilcoy </span>
+                    <span class="block text-sm opacity-70">
+                      25 de mayo, altura 212
+                    </span>
+                  </p>
+                </label>
+                <label
+                  for="sucursal-berazategui"
+                  class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                >
+                  <input
+                    type="radio"
+                    id="sucursal-berazategui"
+                    value="5"
+                    name="sucursal"
+                    class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                    required
+                  />
+                  <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                      Berazategui
+                    </span>
+                    <span class="block text-sm opacity-70">
+                      Av. 21, num. 3955
+                    </span>
+                  </p>
+                </label>
+                {% endif %}
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <!-- <div class="border-b border-neutral-900/10 pb-12">
+          <div class="mt-10 space-y-10">
+            <fieldset>
+              <div class="flex flex-col space-y-6">
+                
+                <div class="relative flex gap-x-3">
+                  <div class="relative flex h-6 items-center">
+                    <input
+                      id="offers"
+                      name="offers"
+                      value="{{ usuario.ofertas }}"
+                      type="checkbox"
+                      class="peer z-10 h-4 w-4 rounded border-neutral-300 accent-orange-400 focus:ring-orange-600"
+                    />
+                    <div
+                      class="absolute h-4 w-4 rounded bg-neutral-800 transition-transform peer-checked:translate-x-0.5 peer-checked:translate-y-0.5"
+                    ></div>
+                  </div>
+                  <div class="text-sm leading-6">
+                    <label
+                      for="offers"
+                      class="font-medium text-neutral-900"
+                    >
+                      Ofertas y promociones
+                    </label>
+                    <p class="text-neutral-500">
+                      Obtener notificaciones de ofertas o promociones de
+                      productos de la Fedeteria.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="mt-6 flex items-center justify-end gap-x-6">
+        <button
+          type="submit"
+          class="group/link flex w-48 items-center justify-center gap-2 px-4 py-2 text-base font-medium text-orange-600 transition-all duration-300 transform bg-orange-200 rounded hover:bg-orange-400 hover:text-orange-900 focus:bg-orange-400 focus:outline-none"
+        >
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

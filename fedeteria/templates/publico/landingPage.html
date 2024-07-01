@@ -1,0 +1,465 @@
+{% extends 'basic-structure-w-footer.html' %} {% block title %}
+<title>Inicio | Fedeteria</title>
+{% endblock %} {% block main %}
+<style>
+  .title-with-svg {
+    display: flex; /* Usamos flexbox para alinear elementos */
+    align-items: center; /* Alinea verticalmente los elementos */
+  }
+  .title-with-svg h1 {
+    margin-right: 10px; /* Espacio entre el h1 y el SVG */
+  }
+  .title-with-svg svg {
+    width: 24px; /* Ajusta el tamaño del SVG según sea necesario */
+    height: 24px;
+    fill: currentColor; /* Ajusta el color del SVG según el texto circundante */
+  }
+</style>
+<div class="flex flex-col w-full max-w-[90vw] px-4 sm:px-6 lg:px-8">
+  
+  {% if destacados %}
+  <h2
+    class="ml-0 sm:ml-8 mb-4 text-center sm:text-left text-2xl font-bold underline tracking-tight text-neutral-900 title-with-svg"
+  >
+    Productos destacados&nbsp;
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#fdba74"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="w-5 h-5"
+    >
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.54 5.82 22 7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fdba74" />
+    </svg>
+  </h2>
+  <div
+    class="mt-6 grid grid-cols-1 gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+  >
+    {% for producto in destacados %}
+    <div
+      class="group flex flex-col items-center justify-center w-full max-w-sm mx-auto"
+    >
+      <div
+        class="w-full h-80 bg-neutral-300 bg-center bg-cover rounded-xl shadow-lg"
+        style="
+            background-image: url('/media/{{ producto.imagen.image }}')"
+      ></div>
+
+      <div
+      class="max-w-full min-w-64 origin-bottom w-full -mt-10 group-hover:-mt-[calc(192px+40px)] transition-all overflow-hidden rounded-xl shadow-md bg-neutral-700/60 backdrop-blur"
+    >
+      <div
+        class="flex w-full flex-wrap gap-2 items-center text-neutral-300 h-0 px-2 group-hover:h-48 group-hover:py-0.5 overflow-hidden transition-all"
+      >
+        <div class="flex w-full gap-2 items-center border-b pb-2">
+          <img
+            class="object-cover mx-2 rounded-md w-14 shrink-0 h-14 ring-4 ring-neutral-300"
+            src="/static{{producto.producto.usuario.usuario.avatar}}"
+            alt=""
+          />
+
+          <div class="flex flex-col mx-2">
+            <h1 class="font-semibold truncate text-neutral-200">
+              {{producto.producto.usuario.first_name}}
+              {{producto.producto.usuario.last_name}}
+            </h1>
+            <span class="flex items-start text-sm font-semibold">
+              {% if producto.producto.usuario.usuario.calificacion is None or producto.producto.usuario.usuario.num_calificaciones == 0 %}
+              Sin calificacion
+              {% else %}
+              {{producto.producto.usuario.usuario.calificacion}}
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="mt-0.5 shrink-0 h-4 w-4 fill-orange-200 stroke-orange-400"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"
+              />
+              </svg>
+                              
+            <span class="opacity-60 text-xs ml-2">
+              - {{producto.producto.usuario.usuario.num_calificaciones}} calificaciones
+            </span>
+              {% endif %}
+              
+            
+          
+            </span>
+            <span class="flex items-start text-sm font-semibold">
+              {{producto.producto.usuario.usuario.sucursal.localidad}}
+            </span>
+
+
+          </div>
+        </div>
+        <div class="flex flex-col w-full gap-2">
+          <p class="flex items-center gap-1 text-sm font-semibold">
+            <span
+            class="text-neutral-200/70 text-xs">Categoria(s):</span> 
+            {% for tag in producto.tags %}
+
+            <span
+            class="bg-neutral-800 text-neutral-200 rounded-md text-xs h-fit px-2 py-0.5 ml-1"
+        >
+            {{ tag }}
+
+          </span>
+            {% endfor %}
+          </p>
+          <p class="flex items-center gap-1 text-sm font-semibold">
+            <span
+            class="text-neutral-300/70 text-xs">Estado del producto:</span> {{producto.producto.estado_producto}}
+          </p>
+          <p class="flex items-center gap-1 text-sm font-semibold">
+            <span
+            class="text-neutral-300/70 text-xs">Fecha publicacion:</span> {{producto.tiempo_publicacion}}
+          </p>
+        </div>
+      </div>
+
+      <h3
+        class="relative py-2 px-3 font-medium truncate text-center uppercase text-white"
+      >
+        {{producto.producto.nombre}}
+        <span class="absolute right-0 mr-1 top-1/2 -translate-y-[50%] flex items-center w-fit md:hidden">
+          <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-4 h-4 rotate-180 transition-all group-hover:-mt-1 group-hover:opacity-0"
+        >
+          <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path d="M6 9l6 6l6 -6" />
+        </svg>
+        </span>
+      </h3>
+
+        <div
+          class="flex items-center justify-between gap-2 px-3 py-2 bg-neutral-800 group-hover:bg-neutral-800/70 transition-colors"
+        >
+          <span class="font-bold text-neutral-300">
+            {% if producto.producto.cat_precio is None %}
+            <!--  -->
+            ---
+            <!--  -->
+            {% else %}
+            <!--  -->
+            clase {{ producto.producto.cat_precio.nombre }}
+            <!--  -->
+            {% endif %}
+          </span>
+          <a
+            href="/productos/producto/{{producto.producto.id}}"
+            class="group/link flex items-center px-2 py-1 text-xs text-orange-600 uppercase transition-colors duration-300 transform bg-orange-200 rounded hover:bg-orange-400 hover:text-orange-900 focus:bg-orange-400 focus:outline-none"
+          >
+            Ver producto
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="w-5 h-5 transition-all duration-100 ease-in group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path d="M17 7l-10 10" />
+              <path d="M8 7l9 0l0 9" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <!-- More products... -->
+  </div>
+
+  {% endif %}
+</div>
+
+<div class="flex flex-col w-full max-w-[90vw] px-4 sm:px-6 lg:px-8">
+  <h2
+    class="ml-0 sm:ml-8 mb-4 text-center sm:text-left text-2xl font-bold underline tracking-tight text-neutral-900"
+  >
+    Últimos productos publicados
+  </h2>
+  {% if productos %}
+  <div
+    class="mt-6 grid grid-cols-1 gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+  >
+    {% for producto in productos %}
+    <div
+      class="group flex flex-col items-center justify-center w-full max-w-sm mx-auto"
+    >
+      <div
+        class="w-full h-80 bg-neutral-300 bg-center bg-cover rounded-xl shadow-lg"
+        style="
+            background-image: url('/media/{{ producto.imagen.image }}')"
+      ></div>
+
+      <div
+      class="max-w-full min-w-64 origin-bottom w-full -mt-10 group-hover:-mt-[calc(192px+40px)] transition-all overflow-hidden rounded-xl shadow-md bg-neutral-700/60 backdrop-blur"
+    >
+      <div
+        class="flex w-full flex-wrap gap-2 items-center text-neutral-300 h-0 px-2 group-hover:h-48 group-hover:py-0.5 overflow-hidden transition-all"
+      >
+        <div class="flex w-full gap-2 items-center border-b pb-2">
+          <img
+            class="object-cover mx-2 rounded-md w-14 shrink-0 h-14 ring-4 ring-neutral-300"
+            src="/static{{producto.producto.usuario.usuario.avatar}}"
+            alt=""
+          />
+
+          <div class="flex flex-col mx-2">
+            <h1 class="font-semibold truncate text-neutral-200">
+              {{producto.producto.usuario.first_name}}
+              {{producto.producto.usuario.last_name}}
+            </h1>
+            <span class="flex items-start text-sm font-semibold">
+              {% if producto.producto.usuario.usuario.calificacion is None or producto.producto.usuario.usuario.num_calificaciones == 0 %}
+              Sin calificacion
+              {% else %}
+              {{producto.producto.usuario.usuario.calificacion}}
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="mt-0.5 shrink-0 h-4 w-4 fill-orange-200 stroke-orange-400"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"
+              />
+              </svg>
+                              
+            <span class="opacity-60 text-xs ml-2">
+              - {{producto.producto.usuario.usuario.num_calificaciones}} calificaciones
+            </span>
+              {% endif %}
+              
+            
+          
+            </span>
+            <span class="flex items-start text-sm font-semibold">
+              {{producto.producto.usuario.usuario.sucursal.localidad}}
+            </span>
+
+
+          </div>
+        </div>
+        <div class="flex flex-col w-full gap-2">
+          <p class="flex items-center gap-1 text-sm font-semibold">
+            <span
+            class="text-neutral-200/70 text-xs">Categoria(s):</span> 
+            {% for tag in producto.tags %}
+
+            <span
+            class="bg-neutral-800 text-neutral-200 rounded-md text-xs h-fit px-2 py-0.5 ml-1"
+        >
+            {{ tag }}
+
+          </span>
+            {% endfor %}
+          </p>
+          <p class="flex items-center gap-1 text-sm font-semibold">
+            <span
+            class="text-neutral-300/70 text-xs">Estado del producto:</span> {{producto.producto.estado_producto}}
+          </p>
+          <p class="flex items-center gap-1 text-sm font-semibold">
+            <span
+            class="text-neutral-300/70 text-xs">Fecha publicacion:</span> {{producto.tiempo_publicacion}}
+          </p>
+        </div>
+      </div>
+
+      <h3
+        class="relative py-2 px-3 font-medium truncate text-center uppercase text-white"
+      >
+        {{producto.producto.nombre}}
+        <span class="absolute right-0 mr-1 top-1/2 -translate-y-[50%] flex items-center w-fit md:hidden">
+          <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-4 h-4 rotate-180 transition-all group-hover:-mt-1 group-hover:opacity-0"
+        >
+          <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path d="M6 9l6 6l6 -6" />
+        </svg>
+        </span>
+      </h3>
+
+        <div
+          class="flex items-center justify-between gap-2 px-3 py-2 bg-neutral-800 group-hover:bg-neutral-800/70 transition-colors"
+        >
+          <span class="font-bold text-neutral-300">
+            {% if producto.producto.cat_precio is None %}
+            <!--  -->
+            ---
+            <!--  -->
+            {% else %}
+            <!--  -->
+            clase {{ producto.producto.cat_precio.nombre }}
+            <!--  -->
+            {% endif %}
+          </span>
+          <a
+            href="/productos/producto/{{producto.producto.id}}"
+            class="group/link flex items-center px-2 py-1 text-xs text-orange-600 uppercase transition-colors duration-300 transform bg-orange-200 rounded hover:bg-orange-400 hover:text-orange-900 focus:bg-orange-400 focus:outline-none"
+          >
+            Ver producto
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="w-5 h-5 transition-all duration-100 ease-in group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path d="M17 7l-10 10" />
+              <path d="M8 7l9 0l0 9" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <!-- More products... -->
+  </div>
+
+  {% else %}
+  <div
+    class="max-w-[95vw] mx-auto sm:max-w-5xl w-full py-8 px-2 sm:px-16 rounded-lg"
+  >
+    <div class="min-h-64 py-8 px-8 w-full flex flex-col items-center gap-2">
+      <p>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-24 w-24 text-neutral-600"
+        >
+          <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+          <path d="M9 13h.01" />
+          <path d="M15 13h.01" />
+          <path d="M11 17h2" />
+        </svg>
+      </p>
+      <h3 class="text-lg font-medium text-neutral-600">
+        Te pedimos disculpas pero no encontramos publicaciones activas.
+      </h3>
+      <p class="-mt-1 mb-2 text-base text-neutral-500">
+        Podes publicar un articulo que ya no uses y aparecer primero!
+      </p>
+      <a
+        class="hidden transform items-center rounded-lg bg-orange-300 px-3 py-2 text-gray-700 transition-colors duration-300 hover:bg-orange-100 md:flex"
+        href="/perfil/cargarProducto"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-5 w-5"
+        >
+          <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path d="M9 12l6 0" />
+          <path d="M12 9l0 6" />
+          <path
+            d="M4 6v-1a1 1 0 0 1 1 -1h1m5 0h2m5 0h1a1 1 0 0 1 1 1v1m0 5v2m0 5v1a1 1 0 0 1 -1 1h-1m-5 0h-2m-5 0h-1a1 1 0 0 1 -1 -1v-1m0 -5v-2m0 -5"
+          />
+        </svg>
+
+        <span class="mx-2 text-sm font-medium">Publicar un producto</span>
+      </a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

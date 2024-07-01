@@ -1,0 +1,182 @@
+{% extends 'basic-structure-w-footer.html' %} {% block title %}
+<title>Establecer Sucursal | Fedeteria</title>
+{% endblock %} 
+{% block main %}
+<form
+    method="post"
+    autocomplete="on"
+>
+{% csrf_token %}
+    <div class="border rounded-lg bg-gray-100 shadow-md px-8 py-5">
+        <div class="container mx-auto p-4">
+            <a
+            href="/perfil/verTrueque/{{id}}"
+            class="absolute group -mt-16 ml-0 sm:ml-4 w-fit px-4 py-12 text-gray-400 flex items-center gap-2 hover:underline hover:text-neutral-700"
+            ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-5 w-5 group-hover:-translate-x-1 transition-all"
+            >
+                <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+                />
+                <path d="M5 12l14 0" />
+                <path d="M5 12l4 4" />
+                <path d="M5 12l4 -4" />
+            </svg>
+            Volver
+            </a>
+        <div class="mt-10 space-y-10">
+            <fieldset>
+                <legend class="text-base font-semibold leading-6 text-neutral-900">
+                Seleccione una sucursal para concretar el trueque:
+                </legend>
+                <p class="mt-1 text-sm leading-6 text-neutral-600">
+                Selecciona una sucursal de la lista.
+                </p>
+                <div class="grid gap-2 sm:grid-cols-2">
+                    <label
+                        for="sucursal-capital-federal"
+                        class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                    >
+                        <input
+                        type="radio"
+                        id="sucursal-capital-federal"
+                        value="1"
+                        name="sucursal"
+                        class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                        required
+                        />
+                        <p class="ms-3 select-none text-neutral-800">
+                            <span class="block text-sm font-semibold">
+                                Capital Federal
+                            </span>
+                            <span class="block text-sm opacity-70">
+                                Av. Monroe, num. 1428
+                            </span>
+                        </p>
+                    </label>
+                    <label
+                        for="sucursal-la-plata"
+                        class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                    >
+                        <input
+                        type="radio"
+                        id="sucursal-la-plata"
+                        value="2"
+                        name="sucursal"
+                        class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                        required
+                        />
+                        <p class="ms-3 select-none text-neutral-800">
+                            <span class="block text-sm font-semibold"> La Plata </span>
+                            <span class="block text-sm opacity-70">
+                                Calle 55, 483 e/ 4 y 5
+                            </span>
+                        </p>
+                    </label>
+
+                    <label
+                        for="sucursal-chivilcoy"
+                        class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                    >
+                        <input
+                        type="radio"
+                        id="sucursal-chivilcoy"
+                        value="3"
+                        name="sucursal"
+                        class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                        required
+                        />
+                        <p class="ms-3 select-none text-neutral-800">
+                            <span class="block text-sm font-semibold"> Chivilcoy </span>
+                            <span class="block text-sm opacity-70">
+                                25 de mayo, altura 212
+                            </span>
+                        </p>
+                    </label>
+
+                    <label
+                        for="sucursal-dolores"
+                        class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                    >
+                        <input
+                        type="radio"
+                        id="sucursal-dolores"
+                        value="4"
+                        name="sucursal"
+                        class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                        required
+                        />
+                        <p class="ms-3 select-none text-neutral-800">
+                            <span class="block text-sm font-semibold"> Dolores </span>
+                            <span class="block text-sm opacity-70">
+                                Bartolomé Mitre, num. 76
+                            </span>
+                        </p>
+                    </label>
+
+                    <label
+                        for="sucursal-berazategui"
+                        class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                    >
+                        <input
+                        type="radio"
+                        id="sucursal-berazategui"
+                        value="5"
+                        name="sucursal"
+                        class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                        required
+                        />
+                        <p class="ms-3 select-none text-neutral-800">
+                            <span class="block text-sm font-semibold"> Berazategui </span>
+                            <span class="block text-sm opacity-70">
+                                Av. 21, num. 3955
+                            </span>
+                        </p>
+                    </label>
+
+                    <label
+                        for="sucursal-bahia-blanca"
+                        class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+                    >
+                        <input
+                        type="radio"
+                        id="sucursal-bahia-blanca"
+                        value="6"
+                        name="sucursal"
+                        class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                        required
+                        />
+                        <p class="ms-3 select-none text-neutral-800">
+                            <span class="block text-sm font-semibold">
+                                Bahia Blanca
+                            </span>
+                            <span class="block text-sm opacity-70">
+                                Av. Leandro Niceforo Alem, num. 455
+                            </span>
+                        </p>
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+        <div class="mt-6 flex items-end justify-center gap-x-6">
+            <button
+                type="submit"
+                class="group/link flex w-48 items-center justify-center gap-2 px-4 py-2 text-base font-medium text-orange-600 transition-all duration-300 transform bg-orange-200 rounded hover:bg-orange-400 hover:text-orange-900 focus:bg-orange-400 focus:outline-none"
+            >
+                Guardar 
+            </button>
+        </div>
+    </div>
+</form>
+{% endblock %}

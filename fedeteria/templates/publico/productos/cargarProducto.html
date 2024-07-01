@@ -1,0 +1,603 @@
+{% extends 'basic-structure-w-sidebar.html' %}{% block title %}
+<title>Cargar producto | Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<a
+  href="{% url 'publico:perfil' %}"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Perfil
+</a>
+
+<span class="mx-5 font-bold text-gray-500"> / </span>
+<a class="font-semibold text-gray-400"> Cargar Producto </a>
+{% endblock %}{% block main %} {% load static %}
+<div
+  class="mt-10 bg-gray-100 shadow-md max-w-[95vw] sm:max-w-5xl w-full border py-8 px-4 sm:px-16 rounded-lg"
+>
+  <form
+    method="post"
+    action="{% url 'publico:cargarProducto' %}"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+    <div class="space-y-12">
+      <div class="border-b border-neutral-900/10 pb-12">
+        <h2 class="text-lg font-medium leading-7 underline text-neutral-900">
+          Ingresá los datos del producto
+        </h2>
+        <p class="mt-1 text-sm leading-6 text-neutral-600">
+          Uno de nuestros empleados va a asignarle el rango de precios
+          correspondiente a tu producto.<br />No necesitas preocuparte!
+        </p>
+        {% if messages %} {% for message in messages %}
+        <div>
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+          <div
+            class="bg-red-500 text-white p-4 rounded-lg shadow-md"
+            role="alert"
+          >
+            {{ message }}
+          </div>
+          {% else %}
+          <div
+            class="bg-green-500 text-white p-4 rounded-lg shadow-md"
+            role="alert"
+          >
+            {{ message }}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %} {% endif %}
+      </div>
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <!-- Nombre -->
+        <div class="col-span-2 sm:col-span-4">
+          <label
+            for="nombre"
+            class="block text-base font-medium leading-6 text-neutral-900"
+          >
+            Nombre
+          </label>
+          <div class="sm:mt-2">
+            <input
+              type="text"
+              name="nombre"
+              id="nombre"
+              placeholder="Nombre de producto"
+              autocomplete="given-name"
+              class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Estado -->
+        <div class="sm:col-span-2">
+          <label
+            for="estado-select"
+            class="block text-base font-medium leading-6 text-neutral-900"
+          >
+            Estado
+          </label>
+          <select
+            name="estado"
+            id="estado-select"
+            class="mt-2 h-9 min-w-12 max-w-48 w-full pl-3.5 pr-[1.875rem] block rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+            required
+          >
+            <option
+              value=""
+              selected
+              disabled
+            >
+              Seleccionar
+            </option>
+            {% for estado_prod in estados_productos %}
+            <option value="{{ estado_prod.id }}">
+              {{ estado_prod.nombre }}
+            </option>
+            {% endfor %}
+          </select>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 8 6"
+            width="8"
+            height="6"
+            fill="none"
+            class="pointer-events-none absolute inset-y-0 right-3.5 h-full stroke-slate-500"
+          >
+            <path
+              d="M7 1.5l-3 3-3-3"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </div>
+
+        <!-- Descripcion -->
+        <div class="col-span-2 sm:col-span-5">
+          <label
+            for="descripcion"
+            class="block text-base font-medium leading-6 text-neutral-900"
+          >
+            Descripción
+          </label>
+          <div class="sm:mt-2">
+            <textarea
+              name="descripcion"
+              id="descripcion"
+              placeholder="El producto esta reacondicionado, se le puso ..."
+              required
+              class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-4 h-32 py-2.5 text-gray-700 focus:border-orange-400 focus:outline-none focus:ring focus:ring-orange-300 focus:ring-opacity-40"
+            ></textarea>
+
+            <p class="mt-1 ml-1 text-xs text-gray-400 dark:text-gray-600">
+              Utiliza una descripcion que ayude a los demas usuarios a entender
+              el estado de tu producto y lo que deban considerar o tener en
+              cuenta a la hora del intercambio.
+              <br />
+              Tambien ayudara a que el empleado puedo tasar de manera correcta
+              tu publicacion!
+            </p>
+          </div>
+        </div>
+
+        <!-- Categorias -->
+        <div class="col-span-2 sm:col-span-6 w-full">
+          <label
+            for="cat-select"
+            description
+            class="block text-base font-medium leading-6 text-neutral-900"
+          >
+            Categorias
+            <span class="text-sm text-neutral-600">(seleccionar)</span>
+          </label>
+          <div
+            class="mt-2 w-full flex flex-wrap gap-2 sm:gap-4 justify-start items-center"
+          >
+            {% for tag in tags %}
+
+            <label
+              for="categoria-{{tag}}"
+              class="relative cursor-pointer overflow-hidden inline-flex items-center rounded-md bg-neutral-300 px-2 py-1 text-base font-medium text-gray-700 transition-all duration-150 ring-1 ring-inset ring-gray-500/50 has-[:checked]/input:bg-orange-300 has-[:checked]/input:text-orange-700 has-[:checked]/input:ring-orange-500/50 has-[:checked]/input:pl-8"
+            >
+              <span class="select-none"> {{tag}} </span>
+              <input
+                type="checkbox"
+                name="categorias"
+                value="{{tag}}"
+                id="categoria-{{tag}}"
+                class="hidden peer/input"
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-5 w-5 absolute -left-8 opacity-0 transition-all peer-checked/input:left-2 peer-checked/input:opacity-100"
+              >
+                <path
+                  stroke="none"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path d="M5 12l5 5l10 -10" />
+              </svg>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Imagen principal -->
+        <div class="col-span-2 my-4">
+          <h4
+            for="cover-photo"
+            class="block text-sm font-medium leading-6 text-gray-900"
+          >
+            Imagen principal
+          </h4>
+          <!-- for="file-upload" -->
+          <div
+            class="group relative mt-2 max-w-64 flex justify-center items-center rounded-lg overflow-hidden border border-dashed border-gray-900/25 px-6 py-10 aspect-square"
+          >
+            <div
+              id="contenedor_subir_imagen_principal"
+              class="my-2 flex text-center flex-col justify-center text-sm leading-6 text-gray-600"
+              style="display: flex"
+            >
+              <svg
+                class="mx-auto h-12 w-12 text-gray-300"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <label
+                for="input_imagen_principal"
+                class="relative rounded-md cursor-pointer bg-orange-300 px-1 py-0.5 font-semibold text-orange-100 transition-colors duration-150 focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-600 focus-within:ring-offset-2 hover:text-orange-400 hover:bg-orange-200"
+              >
+                <span>Subí una imagen</span>
+                <input
+                  onchange="loadFile(event, 'principal')"
+                  id="input_imagen_principal"
+                  name="imagen_principal"
+                  type="file"
+                  class="sr-only"
+                  accept="image/*"
+                />
+              </label>
+              <p class="text-xs leading-5 text-gray-600">
+                PNG, JPG, JPEG, WEBP or AVIF
+              </p>
+            </div>
+
+            <img
+              id="imagen_principal"
+              class="absolute z-0 inset-0 w-full h-full object-cover object-center opacity-30 transition-opacity group-hover:opacity-50 select-none pointer-events-none touch-none"
+            />
+            <div
+              id="contenedor_mostrando_imagen_principal"
+              class="absolute z-10 w-full h-full flex-col justify-center items-center gap-2"
+              style="display: none"
+            >
+              <p
+                id="texto_descriptivo_imagen_principal"
+                class="text-orange-300 w-[90%] mx-auto text-sm text-center font-medium px-2 py-1 bg-neutral-800/50 rounded-md"
+              ></p>
+              <button
+                type="button"
+                class="rounded-md cursor-pointer bg-orange-300 px-2 py-1 font-semibold text-orange-100 transition-colors hover:text-orange-400 hover:bg-orange-200"
+                onclick="cancelarImagenSeleccionada('principal')"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+        <script>
+          let cancelarImagenSeleccionada = function (id) {
+            const contenedor_mostrando_imagen = document.getElementById(
+              "contenedor_mostrando_imagen_" + id
+            )
+            const contenedor_subir_imagen = document.getElementById(
+              "contenedor_subir_imagen_" + id
+            )
+
+            document.getElementById("input_imagen_" + id).value = ""
+            document.getElementById("imagen_" + id).src = ""
+            document.getElementById("imagen_" + id).style.display = "none"
+
+            contenedor_mostrando_imagen.style.display = "none"
+            contenedor_subir_imagen.style.display = "flex"
+          }
+
+          let loadFile = function (event, id) {
+            const contenedor_mostrando_imagen = document.getElementById(
+              "contenedor_mostrando_imagen_" + id
+            )
+            const contenedor_subir_imagen = document.getElementById(
+              "contenedor_subir_imagen_" + id
+            )
+            const imagen = document.getElementById("imagen_" + id)
+
+            let file = event.target.files[0]
+            imagen.src = URL.createObjectURL(file)
+            imagen.alt = imagen.title = file.name
+            document.getElementById("imagen_" + id).style.display = "block"
+
+            contenedor_mostrando_imagen.style.display = "flex"
+            contenedor_subir_imagen.style.display = "none"
+
+            document.getElementById(
+              "texto_descriptivo_imagen_" + id
+            ).textContent = `Imagen: ${
+              file.name
+            }. Tiene un peso de ${returnFileSize(file.size)}.`
+
+            imagen.onload = function () {
+              URL.revokeObjectURL(imagen.src)
+            }
+          }
+
+          function returnFileSize(number) {
+            if (number < 1024) {
+              return `${number} bytes`
+            } else if (number >= 1024 && number < 1048576) {
+              return `${(number / 1024).toFixed(1)} KB`
+            } else if (number >= 1048576) {
+              return `${(number / 1048576).toFixed(1)} MB`
+            }
+          }
+        </script>
+
+        <!-- Otras Imagenes -->
+        <div
+          class="col-span-2 md:col-span-6 grid grid-cols-2 sm:grid-cols-4 gap-2"
+        >
+          <label
+            for="cover-photo"
+            class="col-span-2 md:col-span-4 block text-sm font-medium leading-6 text-gray-900"
+            >Mas Imagenes (opcionales)</label
+          >
+          <!--  -->
+          <div
+            class="group relative col-span-1 mt-2 flex justify-center items-center rounded-lg overflow-hidden border border-dashed border-gray-900/25 px-6 py-10 aspect-square"
+          >
+            <div
+              id="contenedor_subir_imagen_sec_1"
+              class="my-2 flex text-center flex-col justify-center text-sm leading-6 text-gray-600"
+              style="display: flex"
+            >
+              <svg
+                class="mx-auto h-12 w-12 text-gray-300"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <label
+                for="input_imagen_sec_1"
+                class="relative rounded-md cursor-pointer bg-orange-300 px-1 py-0.5 font-semibold text-orange-100 transition-colors duration-150 focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-600 focus-within:ring-offset-2 hover:text-orange-400 hover:bg-orange-200"
+              >
+                <span>Subí una imagen</span>
+                <input
+                  onchange="loadFile(event, 'sec_1')"
+                  id="input_imagen_sec_1"
+                  name="imagen_sec_1"
+                  type="file"
+                  class="sr-only"
+                  accept="image/*"
+                />
+              </label>
+              <p class="text-xs leading-5 text-gray-600">
+                PNG, JPG, JPEG, WEBP or AVIF
+              </p>
+            </div>
+
+            <img
+              id="imagen_sec_1"
+              class="absolute z-0 inset-0 w-full h-full object-cover object-center opacity-30 transition-opacity group-hover:opacity-50 select-none pointer-events-none touch-none"
+            />
+            <div
+              id="contenedor_mostrando_imagen_sec_1"
+              class="absolute z-10 w-full h-full flex-col justify-center items-center gap-2"
+              style="display: none"
+            >
+              <p
+                id="texto_descriptivo_imagen_sec_1"
+                class="text-orange-300 w-[90%] mx-auto text-sm text-center font-medium px-2 py-1 bg-neutral-800/50 rounded-md"
+              ></p>
+              <button
+                type="button"
+                class="rounded-md cursor-pointer bg-orange-300 px-2 py-1 font-semibold text-orange-100 transition-colors hover:text-orange-400 hover:bg-orange-200"
+                onclick="cancelarImagenSeleccionada('sec_1')"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+
+          <!--  -->
+
+          <div
+            class="group relative col-span-1 mt-2 flex justify-center items-center rounded-lg overflow-hidden border border-dashed border-gray-900/25 px-6 py-10 aspect-square"
+          >
+            <div
+              id="contenedor_subir_imagen_sec_2"
+              class="my-2 flex text-center flex-col justify-center text-sm leading-6 text-gray-600"
+              style="display: flex"
+            >
+              <svg
+                class="mx-auto h-12 w-12 text-gray-300"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <label
+                for="input_imagen_sec_2"
+                class="relative rounded-md cursor-pointer bg-orange-300 px-1 py-0.5 font-semibold text-orange-100 transition-colors duration-150 focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-600 focus-within:ring-offset-2 hover:text-orange-400 hover:bg-orange-200"
+              >
+                <span>Subí una imagen</span>
+                <input
+                  onchange="loadFile(event, 'sec_2')"
+                  id="input_imagen_sec_2"
+                  name="imagen_sec_2"
+                  type="file"
+                  class="sr-only"
+                  accept="image/*"
+                />
+              </label>
+              <p class="text-xs leading-5 text-gray-600">
+                PNG, JPG, JPEG, WEBP or AVIF
+              </p>
+            </div>
+
+            <img
+              id="imagen_sec_2"
+              class="absolute z-0 inset-0 w-full h-full object-cover object-center opacity-30 transition-opacity group-hover:opacity-50 select-none pointer-events-none touch-none"
+            />
+            <div
+              id="contenedor_mostrando_imagen_sec_2"
+              class="absolute z-10 w-full h-full flex-col justify-center items-center gap-2"
+              style="display: none"
+            >
+              <p
+                id="texto_descriptivo_imagen_sec_2"
+                class="text-orange-300 w-[90%] mx-auto text-sm text-center font-medium px-2 py-1 bg-neutral-800/50 rounded-md"
+              ></p>
+              <button
+                type="button"
+                class="rounded-md cursor-pointer bg-orange-300 px-2 py-1 font-semibold text-orange-100 transition-colors hover:text-orange-400 hover:bg-orange-200"
+                onclick="cancelarImagenSeleccionada('sec_2')"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+          <!--  -->
+          <!--  -->
+
+          <div
+            class="group relative col-span-1 mt-2 flex justify-center items-center rounded-lg overflow-hidden border border-dashed border-gray-900/25 px-6 py-10 aspect-square"
+          >
+            <div
+              id="contenedor_subir_imagen_sec_3"
+              class="my-2 flex text-center flex-col justify-center text-sm leading-6 text-gray-600"
+              style="display: flex"
+            >
+              <svg
+                class="mx-auto h-12 w-12 text-gray-300"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <label
+                for="input_imagen_sec_3"
+                class="relative rounded-md cursor-pointer bg-orange-300 px-1 py-0.5 font-semibold text-orange-100 transition-colors duration-150 focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-600 focus-within:ring-offset-2 hover:text-orange-400 hover:bg-orange-200"
+              >
+                <span>Subí una imagen</span>
+                <input
+                  onchange="loadFile(event, 'sec_3')"
+                  id="input_imagen_sec_3"
+                  name="imagen_sec_3"
+                  type="file"
+                  class="sr-only"
+                  accept="image/*"
+                />
+              </label>
+              <p class="text-xs leading-5 text-gray-600">
+                PNG, JPG, JPEG, WEBP or AVIF
+              </p>
+            </div>
+
+            <img
+              id="imagen_sec_3"
+              class="absolute z-0 inset-0 w-full h-full object-cover object-center opacity-30 transition-opacity group-hover:opacity-50 select-none pointer-events-none touch-none"
+            />
+            <div
+              id="contenedor_mostrando_imagen_sec_3"
+              class="absolute z-10 w-full h-full flex-col justify-center items-center gap-2"
+              style="display: none"
+            >
+              <p
+                id="texto_descriptivo_imagen_sec_3"
+                class="text-orange-300 w-[90%] mx-auto text-sm text-center font-medium px-2 py-1 bg-neutral-800/50 rounded-md"
+              ></p>
+              <button
+                type="button"
+                class="rounded-md cursor-pointer bg-orange-300 px-2 py-1 font-semibold text-orange-100 transition-colors hover:text-orange-400 hover:bg-orange-200"
+                onclick="cancelarImagenSeleccionada('sec_3')"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+          <!--  -->
+          <!--  -->
+
+          <div
+            class="group relative col-span-1 mt-2 flex justify-center items-center rounded-lg overflow-hidden border border-dashed border-gray-900/25 px-6 py-10 aspect-square"
+          >
+            <div
+              id="contenedor_subir_imagen_sec_4"
+              class="my-2 flex text-center flex-col justify-center text-sm leading-6 text-gray-600"
+              style="display: flex"
+            >
+              <svg
+                class="mx-auto h-12 w-12 text-gray-300"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <label
+                for="input_imagen_sec_4"
+                class="relative rounded-md cursor-pointer bg-orange-300 px-1 py-0.5 font-semibold text-orange-100 transition-colors duration-150 focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-600 focus-within:ring-offset-2 hover:text-orange-400 hover:bg-orange-200"
+              >
+                <span>Subí una imagen</span>
+                <input
+                  onchange="loadFile(event, 'sec_4')"
+                  id="input_imagen_sec_4"
+                  name="imagen_sec_4"
+                  type="file"
+                  class="sr-only"
+                  accept="image/*"
+                />
+              </label>
+              <p class="text-xs leading-5 text-gray-600">
+                PNG, JPG, JPEG, WEBP or AVIF
+              </p>
+            </div>
+
+            <img
+              id="imagen_sec_4"
+              class="absolute z-0 inset-0 w-full h-full object-cover object-center opacity-30 transition-opacity group-hover:opacity-50 select-none pointer-events-none touch-none"
+            />
+            <div
+              id="contenedor_mostrando_imagen_sec_4"
+              class="absolute z-10 w-full h-full flex-col justify-center items-center gap-2"
+              style="display: none"
+            >
+              <p
+                id="texto_descriptivo_imagen_sec_4"
+                class="text-orange-300 w-[90%] mx-auto text-sm text-center font-medium px-2 py-1 bg-neutral-800/50 rounded-md"
+              ></p>
+              <button
+                type="button"
+                class="rounded-md cursor-pointer bg-orange-300 px-2 py-1 font-semibold text-orange-100 transition-colors hover:text-orange-400 hover:bg-orange-200"
+                onclick="cancelarImagenSeleccionada('sec_4')"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+          <!--  -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit button -->
+    <div class="mt-6 flex items-center justify-end gap-x-6">
+      <button
+        type="submit"
+        class="group/link flex w-48 items-center justify-center gap-2 px-4 py-2 text-base font-medium text-orange-600 transition-all duration-300 transform bg-orange-200 rounded hover:bg-orange-400 hover:text-orange-900 focus:bg-orange-400 focus:outline-none"
+      >
+        Publicar
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

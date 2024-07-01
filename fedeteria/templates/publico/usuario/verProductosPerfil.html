@@ -1,0 +1,383 @@
+{% extends 'basic-structure-w-sidebar.html' %}{% block title %}
+<title>Mis productos | Perfil | Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.0/dist/cdn.min.js"></script>
+<a
+  href="/perfil"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Perfil
+</a>
+<script>let id = -1;</script>
+<script>
+  async function tienePromocion(id) {
+    const response = await fetch(`/api/v1/es_promocionado/${id}`);
+    const data = await response.json();
+    return data;
+  }
+</script>
+<span class="mx-5 font-bold text-gray-500"> / </span>
+
+<a
+  href="/perfil/productos"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Mis Productos
+</a>
+{% endblock %} {% block main %}
+<div
+  class="max-w-[95vw] sm:max-w-5xl w-full border py-8 px-2 sm:px-16 rounded-lg bg-gray-100 shadow-md"
+>
+  <h1 class="font-semibold tracking-wide underline text-2xl mb-4">
+    Tus productos
+  </h1>
+  {% if messages %} {% for message in messages %}
+  <div>
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div
+      class="bg-red-500 text-white p-4 rounded-lg shadow-md"
+      role="alert"
+    >
+      {% else %}
+      <div
+        class="bg-green-500 text-white p-4 rounded-lg shadow-md"
+        role="alert"
+      >
+        {% endif %} {{ message }}
+      </div>
+    </div>
+
+    {% endfor %} {% endif %} {% if productos %}
+    <ul
+      role="list"
+      class=""
+    >
+      {% for producto in productos %}
+      <li
+        class="relative group flex justify-between gap-x-6 py-5 px-2 flex-wrap transition-all duration-200 ease-in mb-4 hover:rounded-md hover:bg-neutral-200/70"
+      >
+        <div
+          class="flex flex-wrap sm:flex-nowrap justify-between basis-full w-full"
+        >
+          <div class="flex min-w-0 gap-x-4">
+            <img
+              class="h-32 w-32 flex-none rounded-md bg-neutral-50 object-cover"
+              src="{{ producto.imagen }}"
+              alt=""
+            />
+            <div class="min-w-0 flex-auto">
+              <p
+                class="h-6 overflow-hidden text-sm truncate font-semibold leading-6 text-neutral-900"
+              >
+                {{producto.p.nombre}}
+              </p>
+              <p
+                class="h-16 overflow-hidden mt-1 text-xs leading-4 text-neutral-500"
+              >
+                {{producto.p.descripcion}}
+              </p>
+
+            </div>
+          </div>
+          <div
+            class="shrink-0 content-end flex flex-row-reverse w-full justify-between sm:w-fit sm:justify-start sm:flex-col sm:items-end pl-4"
+          >
+            <p
+              class="text-lg font-semibold leading-6 tracking-wider text-neutral-900"
+            >
+              {% if producto.p.cat_precio is None %}
+              <!--  -->
+              ---
+              <!--  -->
+              {% else %}
+              <!--  -->
+              clase {{ producto.p.cat_precio.nombre }}
+              <!--  -->
+              {% endif %}
+            </p>
+            <p
+              class="text-lg font-semibold leading-6 tracking-wider text-neutral-900"
+            >
+              {{producto.p.estado_producto.nombre}}
+            </p>
+            <div class="mt-1 flex items-center gap-x-1.5">
+              {% if producto.p.estado_publicacion == "Activo" %}
+              <div class="flex-none rounded-full bg-emerald-500/20 p-1">
+                <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+              </div>
+              {% else %}
+                <div class="flex-none rounded-full bg-blue-500/20 p-1">
+                  <div class="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
+                </div>
+              {% endif %}
+
+              <p class="text-xs leading-5 text-neutral-500">
+                {{producto.p.estado_publicacion}}
+              </p>
+            </div>
+
+            <!-- Indicador si está promocionado -->
+                        
+            <div id="indicador{{producto.p.id}}" class="indicador-promocion mt-1 flex items-center gap-x-1.5" style="visibility: hidden;">              
+              <div class="flex-none rounded-full bg-emerald-500/20 p-1">
+                <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+              </div>              
+              <p class="text-xs leading-5 text-neutral-500">
+                Promocionado
+              </p>
+            </div>
+
+            <!-- FIN Indicador si está promocionado -->
+            
+            <p class="mt-1 text-xs leading-5 text-neutral-500">
+              Subido {{ producto.tiempo_publicacion }}
+            </p>
+          </div>
+        </div>
+        <details
+          class="group/details basis-full w-full mt-2 flex transition-all duration-200 ease-in"
+        >
+          <summary
+            class="mb-2 w-full flex justify-between items-center gap-1 cursor-pointer select-none"
+          >
+            <div class="w-full rounded-md h-[1px] bg-neutral-500/50"></div>
+            <p
+              class="flex gap-2 items-center min-w-min text-xs px-1 whitespace-nowrap"
+            >
+              Ver opciones
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-4 h-4 group-open/details:rotate-180 group-hover/details:translate-y-0.5 transition-all ease-in"
+              >
+                <path
+                  stroke="none"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path d="M6 9l6 6l6 -6" />
+              </svg>
+            </p>
+            <div class="w-full rounded-md h-[1px] bg-neutral-500/50"></div>
+          </summary>
+          <div
+            class="w-full opacity-25 h-0 group-open/details:opacity-100 group-open/details:h-fit flex flex-wrap sm:flex-nowrap justify-evenly items-center space-y-2 sm:space-y-0 gap-2 py-1 transition-all delay-300 duration-200 ease-in"
+          >
+            <a
+              href="/perfil/productos/producto/{{producto.p.id}}"
+              class="basis-2/5 sm:basis-auto flex items-center gap-2 hover:-translate-y-0.5 w-fit px-3 py-1 text-sm font-medium rounded-md bg-neutral-300 transition-all"
+            >
+              Ver detalles
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke="none"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path d="M17 7l-10 10" />
+                <path d="M8 7l9 0l0 9" />
+              </svg>
+            </a>
+            <!-- <a
+            href=""
+            class="basis-2/5 sm:basis-auto flex items-center gap-2 hover:-translate-y-0.5 w-fit px-3 py-1 text-sm font-medium rounded-md bg-orange-300 transition-all"
+          >
+            Editar
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="w-5 h-5"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"
+              />
+              <path d="M13.5 6.5l4 4" />
+            </svg>
+          </a> -->
+            <a
+              href="/perfil/productos/producto/eliminar/{{producto.p.id}}"
+              class="basis-2/5 sm:basis-auto flex items-center gap-2 hover:-translate-y-0.5 w-fit px-3 py-1 text-sm font-medium rounded-md bg-red-300 transition-all"
+            >
+              Eliminar
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke="none"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path d="M4 7l16 0" />
+                <path d="M10 11l0 6" />
+                <path d="M14 11l0 6" />
+                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+              </svg>
+            </a>
+            <a
+              id="promocionar-{{producto.p.id}}"
+             href="{% url 'promociones:promocionar_producto' producto.p.id %}"
+             class="basis-2/5 sm:basis-auto flex items-center gap-2 hover:-translate-y-0.5 w-fit px-3 py-1 text-sm font-medium rounded-md bg-green-300 transition-all"
+            >
+            Promocionar
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="w-5 h-5"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path d="M5.636 19.364a9 9 0 1 1 12.728 0" />
+              <path d="M16 9l-4 4" />
+            </svg>
+          </a>
+          </div>
+        </details>
+      </li>
+      <!-- Script Indicador si está promocionado -->
+      <script>
+        id = "{{producto.p.id}}";
+        tienePromocion(id).then((data) => {
+          if (data.es_promocionado) {
+            document.getElementById(`indicador${data.id}`).style.visibility = 'visible';
+            // document.getElementById(`promocionar-${data.id}`).style.visibility = 'hidden';
+            document.getElementById(`promocionar-${data.id}`).innerHTML = `Ver promoción <svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            width="24"
+                                                                            height="24"
+                                                                            viewBox="0 0 24 24"
+                                                                            fill="none"
+                                                                            stroke="currentColor"
+                                                                            stroke-width="2"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                            class="w-5 h-5"
+                                                                          >
+                                                                            <path
+                                                                            stroke="none"
+                                                                            d="M0 0h24v24H0z"
+                                                                            fill="none"
+                                                                          />
+                                                                          <path d="M17 7l-10 10" />
+                                                                          <path d="M8 7l9 0l0 9" />
+                                                                          </svg>`;
+            document.getElementById(`promocionar-${data.id}`).setAttribute('href', `/promociones/detalles/${data.id_promocion}`)
+          }                
+        });                            
+      </script>
+      <!-- FIN Script Indicador si está promocionado -->
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="min-h-64 py-8 px-8 w-full flex flex-col items-center gap-4">
+      <p>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-24 w-24 text-neutral-500"
+        >
+          <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+          <path d="M9 13h.01" />
+          <path d="M15 13h.01" />
+          <path d="M11 17h2" />
+        </svg>
+      </p>
+      <h3 class="text-lg font-medium text-neutral-500">
+        No tenes ningun producto subido!
+      </h3>
+      <a
+        class="hidden transform items-center rounded-lg bg-orange-300 px-3 py-2 text-gray-700 transition-colors duration-300 hover:bg-orange-100 md:flex"
+        href="/perfil/cargarProducto"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-5 w-5"
+        >
+          <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path d="M9 12l6 0" />
+          <path d="M12 9l0 6" />
+          <path
+            d="M4 6v-1a1 1 0 0 1 1 -1h1m5 0h2m5 0h1a1 1 0 0 1 1 1v1m0 5v2m0 5v1a1 1 0 0 1 -1 1h-1m-5 0h-2m-5 0h-1a1 1 0 0 1 -1 -1v-1m0 -5v-2m0 -5"
+          />
+        </svg>
+
+        <span class="mx-2 text-sm font-medium">Publicar un producto</span>
+      </a>
+    </div>
+    {% endif %}
+  </div>
+  {% endblock %}
+</div>

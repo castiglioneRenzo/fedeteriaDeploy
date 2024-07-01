@@ -1,0 +1,15 @@
+{% extends 'basic-structure-moderacion.html' %} {% block title %}
+<title>Panel moderacion| Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<a
+  href="/moderacion"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Moderacion
+</a>
+
+{% endblock %} {% block main %}
+<div class="my-auto flex min-h-full flex-col justify-center px-6 py-8 lg:px-8">
+  Hola {{ user.first_name }}. Bienvenido a la pagina de moderacion!
+</div>
+{% endblock %}

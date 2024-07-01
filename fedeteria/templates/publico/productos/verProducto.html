@@ -1,0 +1,293 @@
+{% extends 'basic-structure-w-footer.html' %}{% block title %}
+<title>{{producto.nombre}} | Productos publicados | Fedeteria</title>
+{% endblock %} {% block main %} {% load static %}
+<div class="bg-white">
+  <div class="relative">
+    <a
+      href="/productos"
+      class="absolute group -mt-16 ml-0 sm:ml-4 w-fit px-4 py-1 text-neutral-400 flex items-center gap-2 hover:underline hover:text-neutral-700"
+      ><svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-5 w-5 group-hover:-translate-x-1 transition-all"
+      >
+        <path
+          stroke="none"
+          d="M0 0h24v24H0z"
+          fill="none"
+        />
+        <path d="M5 12l14 0" />
+        <path d="M5 12l4 4" />
+        <path d="M5 12l4 -4" />
+      </svg>
+      Volver
+    </a>
+    <!-- Product info -->
+    <div
+      class="mx-auto max-w-2xl px-4 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8"
+    >
+      <div
+        class="w-full h-auto grid-cols-2 aspect-[16/12] overflow-hidden rounded-lg block sm:hidden mb-4"
+      >
+        <img
+          src="{{imagen_principal}}"
+          alt="imagen de {{producto.nombre}}"
+          class="h-full w-full object-cover object-center"
+        />
+      </div>
+      <!-- Title and price with owner info -->
+      <div class="lg:col-start-3 lg:row-span-3 lg:col-span-1 lg:mt-0">
+        <div class="flex items-center gap-x-1.5">
+          {% if producto.estado_publicacion == "Activo" %}
+          <div class="flex-none rounded-full bg-green-500/20 p-1">
+            <div class="h-1.5 w-1.5 rounded-full bg-green-500"></div>
+          </div>
+          <p class="text-xs leading-5 text-neutral-500">
+            {{producto.estado_publicacion}}
+          </p>
+          {% else %}
+          <div class="flex-none rounded-full bg-blue-500/20 p-1">
+            <div class="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
+          </div>
+          <p class="text-xs leading-5 text-neutral-500">
+            {{producto.estado_publicacion}}
+          </p>
+          {% endif %}
+        </div>
+        <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+          {{producto.nombre}}
+        </h1>
+
+        <h2 class="sr-only">Product price</h2>
+        <p class="text-3xl tracking-tight text-gray-900">
+          {% if producto.cat_precio is None %}
+          <!--  -->
+          ---
+          <!--  -->
+          {% else %}
+          <!--  -->
+          Clase {{producto.cat_precio.nombre}}
+          <!--  -->
+          {% endif %}
+        </p>
+        <p class="text-base font-medium text-gray-500">
+          {{producto.estado_producto.nombre}}
+        </p>
+        <!-- <p class="text-xs font-ligth text-gray-500">
+          Publicado {{ tiempo_publicacion }}
+        </p> -->
+
+        <div class="">
+          {% if request.user.username != duenio.username and producto.estado_publicacion != "Pausado" %}
+          <a
+            href="{% url 'trueques:iniciar' producto.id %}"
+            class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-orange-400 px-8 py-3 text-base font-medium text-white hover:bg-orange-600 transition-colors"
+          >
+            Iniciar oferta
+          </a>
+          {% else %}
+          <p
+            class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-orange-400 opacity-50 px-8 py-3 text-base font-medium text-white transition-colors"
+          >
+            Iniciar oferta
+          </p>
+          {% endif %}
+        </div>
+
+        <!-- Owner info and Reviews -->
+        <div class="mt-8 border-t py-4">
+          <div class="flex flex-col gap-2 py-4 rounded-lg">
+            <div class="flex items-center">
+              <img
+                class="object-cover mx-2 rounded-md w-14 shrink-0 h-14 ring-4 ring-gray-300"
+                src="/static{{duenio.avatar}}"
+                alt="avatar usuario"
+              />
+
+              <div class="flex flex-col mx-2">
+                <h1 class="font-semibold text-gray-800">
+                  {{duenio.nombre}} {{duenio.apellido}}
+                </h1>
+                <span class="text-sm text-gray-500">{{duenio.email}}</span>
+                <span class="text-sm text-gray-500">{{duenio.telefono}}</span>
+              </div>
+            </div>
+            <div class="flex w-full items-center py-1 px-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="mt-0.5 shrink-0 h-5 w-5"
+              >
+                <path
+                  stroke="none"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                <path d="M6 21v-2a4 4 0 0 1 4 -4h.5" />
+                <path
+                  d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z"
+                />
+              </svg>
+              <p class="ms-3 text-neutral-800">
+                <span class="block text-sm opacity-70"> Valoracion: </span>
+                <span class="flex items-center text-sm font-semibold">
+                  {% if duenio.calificacion is None or duenio.num_calificaciones == 0 %}
+                    Sin calificacion
+                  {% else %}
+                  <span class="opacity-100 text-sm">{{duenio.calificacion}} </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="mt-0.5 shrink-0 h-4 w-4 fill-orange-200 stroke-orange-400"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"
+                    />
+                  </svg> 
+                  
+                  <span class="opacity-60 text-xs ml-2">
+                    - {{duenio.num_calificaciones}} calificaciones
+                  </span>
+                  {% endif %}
+                  
+
+                </span>
+              </p>
+            </div>
+            <div class="flex w-full items-center py-1 px-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="mt-0.5 shrink-0 h-5 w-5"
+              >
+                <path
+                  stroke="none"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path d="M12 18.5l-3 -1.5l-6 3v-13l6 -3l6 3l6 -3v7.5" />
+                <path d="M9 4v13" />
+                <path d="M15 7v5.5" />
+                <path
+                  d="M21.121 20.121a3 3 0 1 0 -4.242 0c.418 .419 1.125 1.045 2.121 1.879c1.051 -.89 1.759 -1.516 2.121 -1.879z"
+                />
+                <path d="M19 18v.01" />
+              </svg>
+              <p class="ms-3 text-neutral-800">
+                <span class="block text-sm opacity-70">
+                  Sucursal preferida:
+                </span>
+                <span class="block text-sm font-semibold">
+                  {{duenio.sucursal.localidad}} -
+                  <span class="opacity-60 text-xs"
+                    >{{duenio.sucursal.direccion}}</span
+                  >
+                </span>
+              </p>
+            </div>
+            <a
+              href="/usuario/{{duenio.username}}"
+              class="flex w-full items-center justify-center rounded-md border border-transparent bg-orange-200 px-2 py-1 text-base font-medium text-orange-400 hover:bg-orange-300 hover:text-orange-7 00 transition-colors"
+            >
+              Ver informacion del vendedor
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-0"
+      >
+        <!-- primary Image -->
+        <div
+          class="w-full hidden h-auto grid-cols-2 aspect-[16/10] overflow-hidden rounded-lg sm:block"
+        >
+          <img
+            src="{{imagen_principal}}"
+            alt="Two each of gray, white, and black shirts laying flat."
+            class="h-full w-full object-cover object-center"
+          />
+        </div>
+
+        <div class="flex justify-start items-center gap-2 mt-5">
+          {% for categoria in categorias %}
+          <a
+            class="bg-neutral-800 text-neutral-200 rounded-md text-xs h-fit px-2 py-0.5 transition-all ease-out hover:-translate-y-0.5"
+            href="/productos?categorias={{ categoria.id }}"
+          >
+            {{ categoria}}
+          </a>
+          {% endfor %}
+        </div>
+
+        <!-- Description and details -->
+        <div class="mt-5">
+          <h3 class="">Descripcion:</h3>
+          <div class="space-y-6">
+            <p class="text-base text-gray-900">{{producto.descripcion}}</p>
+          </div>
+        </div>
+      </div>
+      <!-- Imágenes secundarias -->
+      {% if imagenes_secundarias %}
+
+      <div class="col-span-full max-w-2xl mt-16 my-8">
+        <h3 class="text-lg underline font-medium text-gray-900">
+          Galeria de imagenes
+        </h3>
+      </div>
+      <div
+        class="col-span-full mx-auto w-full max-w-2xl gap-x-4 gap-y-16 lg:grid lg:max-w-7xl lg:grid-cols-4 lg:grid-rows-[auto,auto,1fr]"
+      >
+        {% for imagen in imagenes_secundarias %}
+        <div
+          class="w-full max-h-64 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0"
+        >
+          <img
+            src="{{imagen}}"
+            alt="{{imagen.nombre}}"
+            class="h-full w-full object-cover object-center"
+          />
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% endblock %}
+</div>

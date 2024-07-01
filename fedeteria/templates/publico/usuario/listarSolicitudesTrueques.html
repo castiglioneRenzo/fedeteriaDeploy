@@ -1,0 +1,498 @@
+{% extends 'basic-structure-w-sidebar.html' %}{% block title %}
+<title>Mis productos | Perfil | Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<a
+  href="/perfil"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Perfil
+</a>
+
+<span class="mx-5 font-bold text-gray-500"> / </span>
+
+<a
+  href="/perfil/solicitudes"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Solicitudes de trueques
+</a>
+{% endblock %} {% block main %}
+<script>
+  async function getImagenProducto(id){
+    try {
+      const url = 'http://127.0.0.1:8000/api/v1/imgprincipal/' + id;
+      const response = await fetch(url);
+      if(!response.ok){
+        throw new Error("Error en la solicitud");
+      }
+      //response.text().then((value) => {console.log(value);});
+      return response.json();
+    } catch (error) {
+      console.log(error)
+    }
+  }
+</script>
+
+<!-- Mensajes -->
+
+{% if messages %} 
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div
+            class="bg-red-500 text-white p-4 rounded-lg shadow-md"
+            role="alert"
+        >
+            {{ message }}
+        </div>
+        {% else %}
+        <div
+            class="bg-green-500 text-white p-4 rounded-lg shadow-md"
+            role="alert"
+        >
+            {{ message }}
+        </div>        
+        {% endif %}
+    {% endfor %} 
+{% endif %}
+
+
+
+
+
+<!--  -->
+
+
+
+
+
+<div
+    class="max-w-[95vw] sm:max-w-5xl w-full border py-8 px-2 sm:px-16 rounded-lg bg-gray-100 shadow-md"
+>
+      <!-- Solicitudes iniciadas por otros -->
+
+      <h1 class="font-semibold tracking-wide underline text-2xl mb-4">
+        Solicitudes de trueques
+      </h1>
+       {% if trueques %}
+        <ul
+          role="list"
+          class=""
+        >
+          {% for trueque in trueques %}
+          {% if trueque.estado == 'Pendiente' %}
+          <li
+            class="relative group flex justify-between gap-x-6 py-5 px-2 flex-wrap transition-all duration-200 ease-in mb-4 hover:rounded-md hover:bg-neutral-200/70"
+          >
+            <div
+              class="flex flex-wrap sm:flex-nowrap justify-between basis-full w-full"
+            >
+              <!-- <div class="flex min-w-0 gap-x-8"> -->
+              <div class="grid grid-cols-3 gap-x-8">
+                <div class="min-w-0 flex-initial">
+                  <img
+                    class="h-32 w-32 flex-none rounded-md bg-neutral-50 object-cover imagen-trueque"
+                    src="{{ trueque.producto_1.id }}"
+                    alt="{{ trueque.producto_1.id }}"
+                  />                  
+                  <p
+                    class="h-6 overflow-hidden text-sm truncate font-semibold leading-6 text-neutral-900"
+                  >
+                    {{trueque.producto_1.nombre}}
+                  </p>
+                </div>
+
+
+                <div class="min-w-0 flex-auto">
+                  <img 
+                    class="h-32 w-32 flex-none rounded-md  object-cover"
+                    src="/static/public/icons/intercambio.svg">                    
+                  </img>
+                </div>
+
+
+                <div class="min-w-0 flex-initial">
+                  <img
+                    class="h-32 w-32 flex-none rounded-md bg-neutral-50 object-cover imagen-trueque"
+                    src="{{ trueque.producto_2.id }}"
+                    alt="{{ trueque.producto_2.id }}"
+                  />
+                  <p
+                    class="h-6 overflow-hidden text-sm truncate font-semibold leading-6 text-neutral-900"
+                  >
+                    {{trueque.producto_2.nombre}}
+                  </p>
+                </div>                
+              </div>
+              <div
+                class="shrink-0 content-end flex flex-row-reverse w-full justify-between sm:w-fit sm:justify-start sm:flex-col sm:items-end pl-4"
+              >
+
+                <div class="mt-1 flex items-center gap-x-1.5">              
+                  <p class="text-s leading-5 text-neutral-500">
+                    {{trueque.estado}}
+                  </p>
+                </div>
+
+                <p class="mt-1 text-xs leading-5 text-neutral-500">
+                  Fecha inicio: {{ trueque.fecha_inicio }}
+                </p>
+              </div>
+            </div>
+            <details
+              class="group/details basis-full w-full mt-2 flex transition-all duration-200 ease-in"
+            >
+              <summary
+                class="mb-2 w-full flex justify-between items-center gap-1 cursor-pointer select-none"
+              >
+                <div class="w-full rounded-md h-[1px] bg-neutral-500/50"></div>
+                <p
+                  class="flex gap-2 items-center min-w-min text-xs px-1 whitespace-nowrap"
+                >
+                  Ver opciones
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-4 h-4 group-open/details:rotate-180 group-hover/details:translate-y-0.5 transition-all ease-in"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M6 9l6 6l6 -6" />
+                  </svg>
+                </p>
+                <div class="w-full rounded-md h-[1px] bg-neutral-500/50"></div>
+              </summary>
+              <div
+                class="w-full opacity-25 h-0 group-open/details:opacity-100 group-open/details:h-fit flex flex-wrap sm:flex-nowrap justify-evenly items-center space-y-2 sm:space-y-0 gap-2 py-1 transition-all delay-300 duration-200 ease-in"
+              >
+                <a
+                  href="{% url 'trueques:aceptar_trueque' trueque.id %}"
+                  class="basis-2/5 sm:basis-auto flex items-center gap-2 hover:-translate-y-0.5 w-fit px-3 py-1 text-sm font-medium rounded-md bg-neutral-300 transition-all"
+                >
+                  Aceptar
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M17 7l-10 10" />
+                    <path d="M8 7l9 0l0 9" />
+                  </svg>
+                </a>
+                <a
+                  href="{% url 'trueques:cancelar_trueque' trueque.id %}"
+                  class="basis-2/5 sm:basis-auto flex items-center gap-2 hover:-translate-y-0.5 w-fit px-3 py-1 text-sm font-medium rounded-md bg-red-300 transition-all"
+                >
+                  Cancelar
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M4 7l16 0" />
+                    <path d="M10 11l0 6" />
+                    <path d="M14 11l0 6" />
+                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                  </svg>
+                </a>
+              </div>
+            </details>
+          </li>
+          {% endif %}          
+          {% endfor %}
+          <script>
+            let imagenes_t = document.getElementsByClassName('imagen-trueque');
+            for (let img of imagenes_t){
+              let id = img.alt;              
+              getImagenProducto(id).then((value) => {img.src=value.image;
+              console.log(value.image)});              
+            }
+          </script>
+        </ul>
+        {% else %}
+        <div class="min-h-64 py-8 px-8 w-full flex flex-col items-center gap-4">
+          <p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-24 w-24 text-neutral-500"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+              <path d="M9 13h.01" />
+              <path d="M15 13h.01" />
+              <path d="M11 17h2" />
+            </svg>
+          </p>
+          <h3 class="text-lg font-medium text-neutral-500">
+            No hay ninguna solicitud en curso
+          </h3>
+        </div>
+        {% endif %}
+    </div>
+
+
+
+
+
+<!--  -->
+
+
+
+
+
+<div
+    class="max-w-[95vw] sm:max-w-5xl w-full border py-8 px-2 sm:px-16 rounded-lg bg-gray-100 shadow-md"
+>
+      <!-- Solicitudes iniciadas por mí -->
+
+      <h1 class="font-semibold tracking-wide underline text-2xl mb-4">
+        Solicitudes iniciadas por mi
+      </h1>
+       {% if truequesByMe %}
+        <ul
+          role="list"
+          class=""
+        >
+          {% for solicitud in truequesByMe %}
+          {% if solicitud.estado == 'Pendiente' %}
+          <li
+            class="relative group flex justify-between gap-x-6 py-5 px-2 flex-wrap transition-all duration-200 ease-in mb-4 hover:rounded-md hover:bg-neutral-200/70"
+          >
+            <div
+              class="flex flex-wrap sm:flex-nowrap justify-between basis-full w-full"
+            >
+              <!-- <div class="flex min-w-0 gap-x-8"> -->
+              <div class="grid grid-cols-3 gap-x-8">
+                <div class="min-w-0 flex-initial">
+                  <img
+                    class="h-32 w-32 flex-none rounded-md bg-neutral-50 object-cover imagenProducto"
+                    src="{{ solicitud.producto_1.id }}"
+                    alt="{{ solicitud.producto_1.id }}"
+                  />                  
+                  <p
+                    class="h-6 overflow-hidden text-sm truncate font-semibold leading-6 text-neutral-900"
+                  >
+                    {{solicitud.producto_1.nombre}}
+                  </p>
+                </div>
+
+
+                <div class="min-w-0 flex-auto">
+                  <img 
+                    class="h-32 w-32 flex-none rounded-md  object-cover"
+                    src="/static/public/icons/intercambio.svg">                    
+                  </img>
+                </div>
+
+                
+                <div class="min-w-0 flex-initial">
+                  <img
+                    class="h-32 w-32 flex-none rounded-md bg-neutral-50 object-cover imagenProducto"
+                    src="{{ solicitud.producto_2.id }}"
+                    alt="{{ solicitud.producto_2.id }}"
+                  />
+                  <p
+                    class="h-6 overflow-hidden text-sm truncate font-semibold leading-6 text-neutral-900"
+                  >
+                    {{solicitud.producto_2.nombre}}
+                  </p>
+                </div>                
+              </div>
+              <div
+                class="shrink-0 content-end flex flex-row-reverse w-full justify-between sm:w-fit sm:justify-start sm:flex-col sm:items-end pl-4"
+              >
+                <div class="mt-1 flex items-center gap-x-1.5">              
+                  <p class="text-s leading-5 text-neutral-500">
+                    {{solicitud.estado}}
+                  </p>
+                </div>
+
+                <p class="mt-1 text-xs leading-5 text-neutral-500">
+                  Fecha inicio: {{ solicitud.fecha_inicio }}
+                </p>
+              </div>
+            </div>
+            <details
+              class="group/details basis-full w-full mt-2 flex transition-all duration-200 ease-in"
+            >
+              <summary
+                class="mb-2 w-full flex justify-between items-center gap-1 cursor-pointer select-none"
+              >
+                <div class="w-full rounded-md h-[1px] bg-neutral-500/50"></div>
+                <p
+                  class="flex gap-2 items-center min-w-min text-xs px-1 whitespace-nowrap"
+                >
+                  Ver opciones
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-4 h-4 group-open/details:rotate-180 group-hover/details:translate-y-0.5 transition-all ease-in"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M6 9l6 6l6 -6" />
+                  </svg>
+                </p>
+                <div class="w-full rounded-md h-[1px] bg-neutral-500/50"></div>
+              </summary>
+              <div
+                class="w-full opacity-25 h-0 group-open/details:opacity-100 group-open/details:h-fit flex flex-wrap sm:flex-nowrap justify-evenly items-center space-y-2 sm:space-y-0 gap-2 py-1 transition-all delay-300 duration-200 ease-in"
+              >
+                <!-- <a
+                  href="{% url 'trueques:aceptar_trueque' solicitud.id %}"
+                  class="basis-2/5 sm:basis-auto flex items-center gap-2 hover:-translate-y-0.5 w-fit px-3 py-1 text-sm font-medium rounded-md bg-neutral-300 transition-all"
+                >
+                  Aceptar
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M17 7l-10 10" />
+                    <path d="M8 7l9 0l0 9" />
+                  </svg>
+                </a> -->
+                <a
+                  href="{% url 'trueques:cancelar_trueque' solicitud.id %}"
+                  class="basis-2/5 sm:basis-auto flex items-center gap-2 hover:-translate-y-0.5 w-fit px-3 py-1 text-sm font-medium rounded-md bg-red-300 transition-all"
+                >
+                  Cancelar
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M4 7l16 0" />
+                    <path d="M10 11l0 6" />
+                    <path d="M14 11l0 6" />
+                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                  </svg>
+                </a>
+              </div>
+            </details>
+          </li>
+          {% endif %}          
+          {% endfor %}
+          <script>
+            let imagenes = document.getElementsByClassName('imagenProducto');
+            for (let img of imagenes){
+              let id = img.alt;              
+              getImagenProducto(id).then((value) => {img.src=value.image;
+              console.log(value.image)});              
+            }
+          </script>
+        </ul>
+        {% else %}
+        <div class="min-h-64 py-8 px-8 w-full flex flex-col items-center gap-4">
+          <p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-24 w-24 text-neutral-500"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+              <path d="M9 13h.01" />
+              <path d="M15 13h.01" />
+              <path d="M11 17h2" />
+            </svg>
+          </p>
+          <h3 class="text-lg font-medium text-neutral-500">
+            No hay ninguna solicitud en curso
+          </h3>
+        </div>
+        {% endif %}
+    </div>
+{% endblock main %}

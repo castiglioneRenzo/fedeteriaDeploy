@@ -1,0 +1,110 @@
+{% extends 'basic-structure-w-sidebar.html' %} {% block title %}
+<title>Ver Promocion | Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<a
+  href="/perfil"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Perfil&nbsp;
+</a>
+<p   class="font-semibold text-gray-400">
+  &nbsp;/&nbsp;
+</p>
+<a
+  href="{% url 'publico:verProductosPerfil' %}"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  &nbsp;Mis Productos
+</a>
+<p   class="font-semibold text-gray-400">
+  &nbsp;/&nbsp;
+</p>
+<a
+  href=""
+  class="font-semibold text-gray-400 hover:underline"
+>
+  &nbsp;Promocion
+</a>
+{% endblock %} 
+{% block main %} {% load static %}
+<script>
+  async function getImage(id){
+    try {
+      const url = 'http://127.0.0.1:8000/api/v1/imgprincipal/' + id;
+      const response = await fetch(url);
+      if(!response.ok){
+        throw new Error("Error en la solicitud" + id);
+      }
+      return response.json();
+    } catch (error) {
+      console.log(error)
+    }
+  }
+</script>
+<div class="flex items-center">    
+      <div class="border rounded-md p-8 bg-gray-100 shadow-md mr-8 md:px-32 md:py-8"> 
+        <div class="grid grid-cols-2 gap-4 divide-x-8">
+            <div
+                id="img-container"
+                class="w-full hidden h-auto grid-cols-2 aspect-[16/10] overflow-hidden rounded-lg sm:block"            
+            >
+                <img
+                  id="imagen-principal"
+                  name="imagen-principal"
+                  src=""
+                  alt=""
+                  class="h-full w-full object-cover object-center"   
+                  style="visibility: hidden;"           
+                />
+            </div>
+            <div class="grid grid-rows-8 gap-1 p-8">
+              <div class="grid grid-cols-2 gap-2">
+                <label for="producto" class="font-semibold text-gray-800">Producto</label>
+                <p class="font-semibold text-gray-400">{{ promocion.producto }}</p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <label for="fecha-inicio" class="font-semibold text-gray-800">Fecha de Inicio</label>
+                <p class="font-semibold text-gray-400">{{ promocion.fecha_inicio }}</p>
+              </div>              
+              <div class="grid grid-cols-2 gap-2">
+                <p class="font-semibold text-gray-400 col-start-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-5 h-5"
+                  >
+                    <!-- Flecha hacia arriba -->
+                    <path d="M12 22V2m-5 7l5-7 5 7" />
+                    <!-- Flecha hacia abajo -->
+                    <path d="M12 2v20m5-7l-5 7-5-7" />
+                  </svg>
+                </p>          
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <label for="fecha-fin" class="font-semibold text-gray-800">Fecha de Fin</label>
+                <p class="font-semibold text-gray-400">{{ promocion.fecha_fin }}</p>    
+              </div>
+            </div> 
+        </div>              
+      </div>    
+</div>
+<script>
+  const idProducto = "{{ promocion.producto.id }}";
+  const img = getImage(idProducto);
+  img.then(data => {
+    const img = document.getElementById('imagen-principal');
+    const imgContainer = document.getElementById('img-container');
+    img.src = data.image;
+    img.style.visibility = 'visible';
+    imgContainer.style.visibility = 'visible';
+  });
+</script>
+{% endblock %}

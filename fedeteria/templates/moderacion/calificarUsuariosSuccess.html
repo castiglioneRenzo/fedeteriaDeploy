@@ -1,0 +1,218 @@
+{% extends 'basic-structure-moderacion.html' %}{% block title %}
+<title>Trueques en proceso | Moderacion | Fedeteria</title>
+{% endblock %}
+{% block main %}
+<div class="my-auto flex min-h-full flex-col justify-center px-6 py-8 lg:px-8">
+    
+    <div
+        class="mt-10 max-w-[95vw] sm:mx-auto sm:w-full sm:max-w-5xl h-full px-8 py-12 border rounded-lg flex flex-col gap-4 items-center justify-center"
+    >
+        <style>
+        .success-checkmark {
+            width: 80px;
+            height: 115px;
+            margin: 0 auto;
+
+            .check-icon {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            border-radius: 50%;
+            box-sizing: content-box;
+            border: 4px solid #4caf50;
+
+            &::before {
+                top: 3px;
+                left: -2px;
+                width: 30px;
+                transform-origin: 100% 50%;
+                border-radius: 100px 0 0 100px;
+            }
+
+            &::after {
+                top: 0;
+                left: 30px;
+                width: 60px;
+                transform-origin: 0 50%;
+                border-radius: 0 100px 100px 0;
+                animation: rotate-circle 4.25s ease-in;
+            }
+
+            &::before,
+            &::after {
+                content: "";
+                height: 100px;
+                position: absolute;
+                background: #ffffff;
+                transform: rotate(-45deg);
+            }
+
+            .icon-line {
+                height: 5px;
+                background-color: #4caf50;
+                display: block;
+                border-radius: 2px;
+                position: absolute;
+                z-index: 10;
+
+                &.line-tip {
+                top: 46px;
+                left: 14px;
+                width: 25px;
+                transform: rotate(45deg);
+                animation: icon-line-tip 1.5s 0.5s;
+                }
+
+                &.line-long {
+                top: 38px;
+                right: 8px;
+                width: 47px;
+                transform: rotate(-45deg);
+                animation: icon-line-long 1.5s 0.5s;
+                }
+            }
+
+            .icon-circle {
+                top: -4px;
+                left: -4px;
+                z-index: 10;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                position: absolute;
+                box-sizing: content-box;
+                border: 4px solid rgba(76, 175, 80, 0.5);
+            }
+
+            .icon-fix {
+                top: 8px;
+                width: 5px;
+                left: 26px;
+                z-index: 1;
+                height: 85px;
+                position: absolute;
+                transform: rotate(-45deg);
+                background-color: #ffffff;
+            }
+            }
+        }
+
+        @keyframes rotate-circle {
+            0% {
+            transform: rotate(-45deg);
+            }
+            5% {
+            transform: rotate(-45deg);
+            }
+            12% {
+            transform: rotate(-405deg);
+            }
+            100% {
+            transform: rotate(-405deg);
+            }
+        }
+
+        @keyframes icon-line-tip {
+            0% {
+            width: 0;
+            left: 1px;
+            top: 19px;
+            }
+            54% {
+            width: 0;
+            left: 1px;
+            top: 19px;
+            }
+            70% {
+            width: 50px;
+            left: -8px;
+            top: 37px;
+            }
+            84% {
+            width: 17px;
+            left: 21px;
+            top: 48px;
+            }
+            100% {
+            width: 25px;
+            left: 14px;
+            top: 45px;
+            }
+        }
+
+        @keyframes icon-line-long {
+            0% {
+            width: 0;
+            right: 46px;
+            top: 54px;
+            }
+            65% {
+            width: 0;
+            right: 46px;
+            top: 54px;
+            }
+            84% {
+            width: 55px;
+            right: 0px;
+            top: 35px;
+            }
+            100% {
+            width: 47px;
+            right: 8px;
+            top: 38px;
+            }
+        }
+        </style>
+        <div class="success-checkmark">
+        <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+            <div class="icon-fix"></div>
+        </div>
+        </div>
+        <h1 class="text-2xl font-medium tracking-wider underline">
+        Usuarios calificados con exito!
+        </h1>
+        <p>Volver a la pagina inicial.</p>
+        <a
+        class="flex transform items-center rounded-md px-8 py-2 text-neutral-50 bg-orange-300 transition-colors duration-300 hover:bg-orange-200 hover:text-neutral-700"
+        href="/moderacion"
+        >
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-5 w-5"
+        >
+            <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+            />
+            <path
+            d="M15 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"
+            />
+            <path d="M21 12h-13l3 -3" />
+            <path d="M11 15l-3 -3" />
+        </svg>
+
+        <span class="mx-2 text-sm font-medium">Volver</span>
+        </a>
+
+        <p>Ir a cargar ventas.</p>
+        <a
+        class="flex transform items-center rounded-md px-8 py-2 text-neutral-50 bg-orange-300 transition-colors duration-300 hover:bg-orange-200 hover:text-neutral-700"
+        href="/moderacion/cargarVentas/{{id}}"
+        >
+        Cargar ventas
+        </a>
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,687 @@
+{% extends 'basic-structure-administracion.html' %}{% block title %}
+<title>Registrar empleado | Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<a
+  href="/administracion"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Administracion
+</a>
+
+<span class="mx-5 font-bold text-gray-500"> / </span>
+
+<a
+  href="/administracion/registrar-empleado"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Registrar empleado
+</a>
+
+{% endblock %} {% block main %}
+<div class="my-auto flex min-h-full flex-col justify-center px-6 py-8 lg:px-8">
+  {% load static %}
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-2xl">
+    <form
+      action=""
+      method="post"
+      autocomplete="on"
+    >
+      {% csrf_token %}
+      <div class="space-y-12">
+        <div class="border-b border-neutral-900/10 pb-12">
+          <h2 class="text-base font-semibold leading-7 text-neutral-900">
+            Ingresá los datos del empleado
+          </h2>
+          <!-- <p class="mt-1 text-sm leading-6 text-neutral-600">
+            Email y DNI no pueden ser modificados más adelante.
+          </p> -->
+          {% if messages %} {% for message in messages %}
+          <div>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div
+              class="bg-red-500 text-white p-4 rounded-lg shadow-md"
+              role="alert"
+            >
+              {{ message }}
+            </div>
+            {% else %}
+            <div
+              class="bg-green-500 text-white p-4 rounded-lg shadow-md"
+              role="alert"
+            >
+              {{ message }}
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %} {% endif %}
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="col-span-full border-y pt-2 pb-4">
+            <legend class="text-base font-semibold leading-6 text-neutral-900">
+              Avatar
+            </legend>
+            <p class="mt-1 text-sm leading-6 text-neutral-600">
+              Selecciona una imagen para el perfil del empleado.
+            </p>
+            <div class="my-2 flex items-center gap-x-3">
+              <div
+                role="list"
+                class="grid grid-cols-4 sm:grid-cols-6 gap-4 justify-around items-center"
+              >
+                <label
+                  for="avatar-1"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  <input
+                    type="radio"
+                    id="avatar-1"
+                    value="/avatars/avatar_1.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  <img
+                    src="{% static '/avatars/avatar_1.avif' %}"
+                    alt="Avatar imagen numero 1"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+                <label
+                  for="avatar-2"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  <input
+                    type="radio"
+                    id="avatar-2"
+                    value="/avatars/avatar_2.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  <img
+                    src="{% static '/avatars/avatar_2.avif' %}"
+                    alt="Avatar imagen numero 2"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+                <label
+                  for="avatar-3"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  <input
+                    type="radio"
+                    id="avatar-3"
+                    value="/avatars/avatar_3.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  <img
+                    src="{% static '/avatars/avatar_3.avif' %}"
+                    alt="Avatar imagen numero 3"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+                <label
+                  for="avatar-4"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  <input
+                    type="radio"
+                    id="avatar-4"
+                    value="/avatars/avatar_4.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  <img
+                    src="{% static '/avatars/avatar_4.avif' %}"
+                    alt="Avatar imagen numero 4"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+                <label
+                  for="avatar-5"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  <input
+                    type="radio"
+                    id="avatar-5"
+                    value="/avatars/avatar_5.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  <img
+                    src="{% static '/avatars/avatar_5.avif' %}"
+                    alt="Avatar imagen numero 5"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+                <label
+                  for="avatar-6"
+                  class="relative w-full h-24 grid-cols-1 aspect-square overflow-hidden rounded-lg mt-8 sm:mt-0 ring-4 ring-neutral-300 focus-within:ring-orange-300 hover:ring-orange-300 has-[:checked]:ring-orange-500"
+                >
+                  <input
+                    type="radio"
+                    id="avatar-6"
+                    value="/avatars/avatar_6.avif"
+                    name="avatar"
+                    class="peer absolute opacity-0 select-none pointer-events-none"
+                    required
+                  />
+                  <img
+                    src="{% static '/avatars/avatar_6.avif' %}"
+                    alt="Avatar imagen numero 6"
+                    class="h-full w-full object-cover object-center peer-checked:opacity-70"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-1/2 top-1/2 -translate-y-[50%] -translate-x-[50%] w-16 h-16 hidden peer-checked:block stroke-orange-400 brightness-125 drop-shadow"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M5 12l5 5l10 -10" />
+                  </svg>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="sm:col-span-3">
+            <label
+              for="first-name"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              Nombre
+            </label>
+            <div class="mt-2">
+              <input
+                type="text"
+                minlength="3"
+                maxlength="128"
+                name="first-name"
+                id="first-name"
+                placeholder="Nombre empleado"
+                autocomplete="given-name"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label
+              for="last-name"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              Apellido
+            </label>
+            <div class="mt-2">
+              <input
+                type="text"
+                minlength="3"
+                maxlength="128"
+                name="last-name"
+                id="last-name"
+                placeholder="Apellido empleado"
+                autocomplete="family-name"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label
+              for="dni"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              DNI
+            </label>
+            <div class="mt-2">
+              <input
+                id="dni"
+                name="dni"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9\s]{7,8}"
+                placeholder="xxxxxxxx"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+          <div class="sm:col-span-3">
+            <label
+              for="born"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              Fecha de nacimiento
+            </label>
+            <div class="mt-2">
+              <input
+                id="born"
+                name="born"
+                type="date"
+                autocomplete="fecha-nacimiento"
+                min="1950-01-01"
+                max="2024-01-01"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+          <div class="sm:col-span-4">
+            <label
+              for="email"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              Email
+            </label>
+            <div class="mt-2">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="example@host.com"
+                autocomplete="email"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label
+              for="city"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              Numero de telefono
+            </label>
+            <div class="mt-2">
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                pattern="[0-9]{3,5}[0-9]{6}"
+                inputmode="numeric"
+                placeholder="xxxx xxxxxx"
+                autocomplete="tel"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+          <div class="sm:col-span-3"></div>
+          <div class="sm:col-span-3">
+            <label
+              for="password"
+              class="flex items-end justify-between text-sm font-medium leading-6 text-neutral-900"
+            >
+              Contraseña
+              <div
+                class="group relative inline-flex size-4 items-center justify-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 text-neutral-600 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-help"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                  <path d="M12 17l0 .01" />
+                  <path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4" />
+                </svg>
+                <div
+                  class="group absolute bottom-full z-10 mb-1 hidden w-56 flex-col justify-start rounded bg-neutral-900/70 px-2 py-1 text-start text-xs font-medium text-white opacity-0 shadow-sm transition-opacity group-hover:flex group-hover:opacity-100"
+                  role="tooltip"
+                >
+                  La contraseña debe contener:
+                  <p class="flex w-full items-center gap-2 font-light">
+                    <span>Minimo 6 caracteres.</span>
+                  </p>
+                  <p class="flex w-full items-center gap-2 font-light">
+                    <span>Debe tener al menos 1 letra minusculas.</span>
+                  </p>
+                  <p class="flex w-full items-center gap-2 font-light">
+                    <span>Debe tener al menos 1 letra Mayuscula.</span>
+                  </p>
+                  <p class="flex w-full items-center gap-2 font-light">
+                    <span>Debe tener al menos 1 numero.</span>
+                  </p>
+                </div>
+              </div>
+            </label>
+            <div class="mt-2">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$"
+                minlength="8"
+                maxlength="16"
+                autocomplete="password"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+          <div class="sm:col-span-3">
+            <label
+              for="repeat_password"
+              class="block text-sm font-medium leading-6 text-neutral-900"
+            >
+              Repetir Contraseña
+            </label>
+            <div class="mt-2">
+              <input
+                id="repeat_password"
+                name="repeat_password"
+                type="password"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$"
+                minlength="8"
+                maxlength="16"
+                autocomplete="repeat_password"
+                class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-b border-neutral-900/10 pb-12">
+        <div class="mt-10 space-y-10">
+          <fieldset>
+            <legend class="text-base font-semibold leading-6 text-neutral-900">
+              Sucursal donde trabaja
+            </legend>
+            <p class="mt-1 text-sm leading-6 text-neutral-600">
+              Selecciona una sucursal de la lista.
+            </p>
+            <div class="grid gap-2 sm:grid-cols-2">
+              <label
+                for="sucursal-capital-federal"
+                class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+              >
+                <input
+                  type="radio"
+                  id="sucursal-capital-federal"
+                  value="1"
+                  name="sucursal"
+                  required
+                  class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                />
+                <p class="ms-3 select-none text-neutral-800">
+                  <span class="block text-sm font-semibold">
+                    Capital Federal
+                  </span>
+                  <span class="block text-sm opacity-70">
+                    Av. Monroe, num. 1428
+                  </span>
+                </p>
+              </label>
+
+              <label
+                for="sucursal-la-plata"
+                class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+              >
+                <input
+                  type="radio"
+                  id="sucursal-la-plata"
+                  value="2"
+                  name="sucursal"
+                  required
+                  class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                />
+                <p class="ms-3 select-none text-neutral-800">
+                  <span class="block text-sm font-semibold"> La Plata </span>
+                  <span class="block text-sm opacity-70">
+                    Calle 55, 483 e/ 4 y 5
+                  </span>
+                </p>
+              </label>
+
+              <label
+                for="sucursal-chivilcoy"
+                class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+              >
+                <input
+                  type="radio"
+                  id="sucursal-chivilcoy"
+                  value="3"
+                  name="sucursal"
+                  required
+                  class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                />
+                <p class="ms-3 select-none text-neutral-800">
+                  <span class="block text-sm font-semibold"> Chivilcoy </span>
+                  <span class="block text-sm opacity-70">
+                    25 de mayo, altura 212
+                  </span>
+                </p>
+              </label>
+
+              <label
+                for="sucursal-dolores"
+                class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+              >
+                <input
+                  type="radio"
+                  id="sucursal-dolores"
+                  value="4"
+                  name="sucursal"
+                  required
+                  class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                />
+                <p class="ms-3 select-none text-neutral-800">
+                  <span class="block text-sm font-semibold"> Dolores </span>
+                  <span class="block text-sm opacity-70">
+                    Bartolomé Mitre, num. 76
+                  </span>
+                </p>
+              </label>
+
+              <label
+                for="sucursal-berazategui"
+                class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+              >
+                <input
+                  type="radio"
+                  id="sucursal-berazategui"
+                  value="5"
+                  name="sucursal"
+                  required
+                  class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                />
+                <p class="ms-3 select-none text-neutral-800">
+                  <span class="block text-sm font-semibold"> Berazategui </span>
+                  <span class="block text-sm opacity-70">
+                    Av. 21, num. 3955
+                  </span>
+                </p>
+              </label>
+
+              <label
+                for="sucursal-bahia-blanca"
+                class="flex w-full items-center rounded-lg border border-neutral-200 bg-white p-3 focus-within:border-orange-500 focus-within:ring-orange-500 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-100 has-[:checked]:text-orange-900"
+              >
+                <input
+                  type="radio"
+                  id="sucursal-bahia-blanca"
+                  value="6"
+                  name="sucursal"
+                  required
+                  class="peer mt-0.5 h-fit shrink-0 rounded-full accent-orange-700 focus:ring-0 focus:ring-orange-500 disabled:pointer-events-none disabled:opacity-50"
+                />
+                <p class="ms-3 select-none text-neutral-800">
+                  <span class="block text-sm font-semibold">
+                    Bahia Blanca
+                  </span>
+                  <span class="block text-sm opacity-70">
+                    Av. Leandro Niceforo Alem, num. 455
+                  </span>
+                </p>
+              </label>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-end gap-x-6">
+        <button
+          type="submit"
+          class="group/link flex w-48 items-center justify-center gap-2 px-4 py-2 text-base font-medium text-orange-600 transition-all duration-300 transform bg-orange-200 rounded hover:bg-orange-400 hover:text-orange-900 focus:bg-orange-400 focus:outline-none"
+        >
+          <span class="ml-5 transition-all ease-in group-hover/link:ml-0">
+            Registrarlo
+          </span>
+          <span class="transition-all ease-in group-hover/link:translate-x-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="pointer-events: bounding-box"
+              class="w-5 h-5 transition-all ease-in group-hover/link:[transition-duration:5000ms] [stroke-dashoffset:1000] [stroke-dasharray:1000] group-hover/link:[stroke-dashoffset:0]"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M3 17c3.333 -3.333 5 -6 5 -8c0 -3 -1 -3 -2 -3s-2.032 1.085 -2 3c.034 2.048 1.658 4.877 2.5 6c1.5 2 2.5 2.5 3.5 1l2 -3c.333 2.667 1.333 4 3 4c.53 0 2.639 -2 3 -2c.517 0 1.517 .667 3 2"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

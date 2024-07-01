@@ -1,0 +1,109 @@
+{% extends 'basic-structure-administracion.html' %}
+<!--  -->
+{% block title %}
+<title>Panel administracion | Fedeteria</title>
+{% endblock %}
+<!--  -->
+{% block second_navbar %}
+<a
+  href="/administracion"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Administracion
+</a>
+<span class="mx-5 font-bold text-gray-500"> / </span>
+<a
+  href="/administracion/estadisticas-ventas"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Ventas por sucursal
+</a>
+<span class="mx-5 font-bold text-gray-500"> / </span>
+<a
+  href="/administracion/estadisticas-ventas/{{sucursal.id}}"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  {{ sucursal.localidad }}
+</a>
+
+{% endblock %}
+<!--  -->
+{% block main %}
+<div
+  class="max-w-[95vw] sm:max-w-5xl w-full border py-8 px-16 rounded-lg bg-gray-200 shadow-md"
+>
+  <div class="px-4 sm:px-0">
+    <h1>Ventas de la sucursal {{ sucursal.localidad }}</h1>
+    <div
+      class="w-full flex flex-wrap sm:flex-nowrap justify-evenly items-center space-y-2 sm:space-y-0 gap-2 py-1 transition-all delay-300 duration-200 ease-in"
+    >
+      <div class="relative w-full overflow-x-auto shadow-md sm:rounded-lg">
+        {% if ventas %}
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-400">
+            <tr>
+              <th
+                scope="col"
+                class="px-6 py-3 min-w-72"
+              >
+                Producto
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3"
+              >
+                Cantidad vendida
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3"
+              >
+                Precio total
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3"
+              >
+                <span class="sr-only">+ info</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for venta in ventas %}
+            <tr class="bg-gray-200 border-b hover:bg-gray-100">
+              <th
+                scope="row"
+                class="grid grid-cols-5 gap-2 items-center justify-around shrink-0 px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+              >
+                {{venta.producto}}
+              </th>
+
+              <td class="px-6 py-4">{{venta.cantidad_vendida}}</td>
+              <td class="px-6 py-4">${{ venta.precio_total }}</td>
+              <td class="px-6 py-4 text-right">
+                <a
+                  href="#"
+                  class="font-medium text-orange-600 hover:underline"
+                  >Ver mas</a
+                >
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <!--  -->
+        {% else %}
+
+        <p
+          scope="row"
+          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+        >
+          No hay nada para mostrar
+        </p>
+
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

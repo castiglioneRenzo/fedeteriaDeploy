@@ -1,0 +1,190 @@
+{% extends 'basic-structure-w-footer.html' %} {% block title %}
+<title>Pagina no encontrada | Fedeteria</title>
+{% endblock %} {% block main %}
+<!-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.0/dist/cdn.min.js"></script> -->
+
+<div class="text-center">
+  <p class="text-base font-semibold text-primary-600">Error 404</p>
+  <h1
+    class="mt-4 text-3xl font-bold tracking-tight text-neutral-900 sm:text-5xl"
+  >
+    Prueba Iniciar Oferta Modal
+  </h1>
+  <!-- Modal toggle -->
+  <div class="grid grid-cols-1 gap-4 place-content-center h-48">
+    <button data-modal-target="oferta-modal" data-modal-toggle="oferta-modal" class="flex items-center justify-center rounded-lg text-lg font-medium gap-2 px-4 py-2 bg-gradient-to-tl to-orange-500 from-orange-400 text-neutral-800 hover:-translate-y-1 will-change-transform transition-transform" type="button">
+        Iniciar Oferta
+    </button>
+  </div>
+
+  <!-- Modal para iniciar oferta -->
+
+        
+
+        <!-- Main modal -->
+        <div id="oferta-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Iniciar Oferta
+                        </h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="oferta-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->                
+                    <div class="p-4 md:p-5 space-y-4">
+                        <div class="sm:col-span-2">
+                            <label
+                              for="producto-select"
+                              class="block text-base font-medium leading-6 text-neutral-900"
+                            >
+                              Intercambiar por:
+                            </label>
+                            <div class="grid grid-cols-1 gap-4 place-content-center h-48">
+                                <select
+                                name="producto"
+                                id="producto-select"
+                                class="mt-2 h-9 min-w-12 max-w-48 w-full pl-3.5 pr-[1.875rem] block rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
+                                required
+                                >
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                >
+                                    Seleccionar
+                                </option>
+                                {% for producto in productos %}
+                                <option value={{producto.id}}>{{producto}}</option>
+                                {% endfor %}
+                                </select>
+                                <p id="demo"></p>
+                            </div>
+                            <script>
+                              document.getElementById('producto-select').addEventListener('change', function() {
+                                var selectedProductId = this.value;
+                                var fotos = JSON.parse('{{ imagenes|safe }}');
+                                var productPhotoUrl = '/media/' + fotos.filter(foto => foto.fields.producto == selectedProductId)[0].fields.image;
+                                var productPhoto = document.getElementById('product-photo');
+                                productPhoto.src = productPhotoUrl;
+                                document.getElementById('contenerdor_imagen').setAttribute('style', 'display: flex');
+                                productPhoto.style.visibility = "visible";
+                              });
+                            </script>
+                            <div
+                            id="contenerdor_imagen"
+                            class="group relative mt-2 max-w-64 flex justify-center items-center rounded-lg overflow-hidden border border-dashed border-gray-900/25 px-6 py-10 aspect-square"
+                            style="display: none;"
+                          >
+                            <div
+                              id="contenedor_subir_imagen_principal"
+                              class="my-2 flex text-center flex-col justify-center text-sm leading-6 text-gray-600"
+                              style="display: flex"
+                            >
+                              <svg
+                                class="mx-auto h-12 w-12 text-gray-300"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                                  clip-rule="evenodd"
+                                />
+                              </svg>
+                              
+                            </div>
+                
+                            <img
+                              id="product-photo"
+                              style="visibility: hidden;"
+                              src=""
+                              class="absolute z-0 inset-0 w-full h-full object-cover object-center opacity-100 transition-opacity group-hover:opacity-50 select-none pointer-events-none touch-none"
+                            />
+                            <div
+                              id="contenedor_mostrando_imagen_principal"
+                              class="absolute z-10 w-full h-full flex-col justify-center items-center gap-2"
+                              style="display: none"
+                            >
+                              <p
+                                id="texto_descriptivo_imagen_principal"
+                                class="text-orange-300 w-[90%] mx-auto text-sm text-center font-medium px-2 py-1 bg-neutral-800/50 rounded-md"
+                              ></p>
+                            </div>
+                          </div>
+                          <!-- Acá termina imagen -->
+                            <svg
+                              aria-hidden="true"
+                              viewBox="0 0 8 6"
+                              width="8"
+                              height="6"
+                              fill="none"
+                              class="pointer-events-none absolute inset-y-0 right-3.5 h-full stroke-slate-500"
+                            >
+                              <path
+                                d="M7 1.5l-3 3-3-3"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              ></path>
+                            </svg>
+                          </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <button data-modal-hide="oferta-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
+                        <button data-modal-hide="oferta-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Decline</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fin modal -->
+  <div class="mt-10 flex items-center justify-center gap-x-6">
+    <a
+      href="/"
+      class="relative w-1/2 sm:w-fit rounded-xl bg-secondary-800"
+    >
+      <span
+        class="flex items-center justify-center rounded-lg text-lg font-medium gap-2 px-4 py-2 bg-gradient-to-tl to-orange-500 from-orange-400 text-neutral-800 hover:-translate-y-1 will-change-transform transition-transform"
+      >
+        Volver al inicio
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-5 h-5 transition-all duration-150 ease-in group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+        >
+          <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path d="M17 7l-10 10" />
+          <path d="M8 7l9 0l0 9" />
+        </svg>
+      </span>
+    </a>
+    <!-- <a
+      href="/"
+      class="text-sm font-semibold text-neutral-900"
+    >
+      Contactanos por email <span aria-hidden="true">&rarr;</span>
+    </a> -->
+  </div>
+</div>
+{% endblock %}

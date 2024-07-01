@@ -1,0 +1,118 @@
+{% extends 'basic-structure-w-footer.html' %} {% block title %}
+<title>Iniciar Sesion | Fedeteria</title>
+{% endblock %}{% block main %} {% load static %}
+<div class="my-auto flex min-h-full flex-col justify-center px-6 py-8 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <img
+      width="300"
+      height="100"
+      class="h-fit w-fit object-contain"
+      src="{% static 'publico/assets/Fedeteria_Horizontal.svg' %}"
+      alt="Your Company"
+    />
+    <h2
+      class="mt-10 mb-2 text-center text-3xl font-semibold leading-9 tracking-tight text-neutral-900"
+    >
+      Ingresá a tu cuenta
+    </h2>
+    {% if messages %} {% for message in messages %}
+    <div>
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+      <div
+        class="bg-red-500 text-white p-4 rounded-lg shadow-md"
+        role="alert"
+      >
+        {{ message }}
+      </div>
+      {% else %}
+      <div
+        class="bg-green-500 text-white p-4 rounded-lg shadow-md"
+        role="alert"
+      >
+        {{ message }}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %} {% endif %}
+  </div>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form
+      action=""
+      method="post"
+      class="space-y-6"
+    >
+      {% csrf_token %}
+      <div>
+        <label
+          htmlFor="dni"
+          class="block text-sm font-medium leading-6 text-neutral-900"
+        >
+          DNI
+        </label>
+        <div class="mt-2">
+          <input
+            id="dni"
+            name="dni"
+            type="text"
+            autocomplete="dni"
+            required
+            class="block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between">
+          <label
+            htmlFor="password"
+            class="block text-sm font-medium leading-6 text-neutral-900"
+          >
+            Contraseña
+          </label>
+          <div class="hidden text-sm">
+            <a
+              href="/auth/forgot-password"
+              class="font-semibold text-orange-600 hover:text-orange-500"
+            >
+              ¿La olvidaste?
+            </a>
+          </div>
+        </div>
+        <div class="relative mt-2">
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+            class="focus:ring-accent-600 block w-full rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+
+      <div>
+        <!-- class="relative w-full bg-secondary-800 rounded-lg transition-all duration-200 hover:-translate-y-1 disabled:opacity-30 disabled:select-none disabled:cursor-not-allowed disabled:pointer-events-none" -->
+
+        <button
+          type="submit"
+          class="group/link flex w-full items-center justify-center gap-2 px-4 py-2 text-base font-medium text-orange-600 transition-all duration-300 transform bg-orange-200 rounded hover:bg-orange-400 hover:text-orange-900 focus:bg-orange-400 focus:outline-none"
+        >
+          Iniciar sesión
+        </button>
+      </div>
+    </form>
+
+    <p class="mt-10 text-center text-sm text-neutral-500">
+      ¿No tenes usuario?
+      <a
+        href="{% url 'publico:registrarUsuario' %}"
+        class="ml-2 font-semibold leading-6 text-orange-400 hover:text-orange-500"
+      >
+        Registrate acá
+      </a>
+    </p>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'basic-structure-w-footer.html' %} {% block title %}
+<title>Pagina no encontrada | Fedeteria</title>
+{% endblock %} {% block main %}
+<div class="text-center">
+  <p class="text-base font-semibold text-primary-600">Error 404</p>
+  <h1
+    class="mt-4 text-3xl font-bold tracking-tight text-neutral-900 sm:text-5xl"
+  >
+    Pagina no encontrada
+  </h1>
+  <p class="mt-6 text-base leading-7 text-neutral-600">
+    Perdon, no hemos podido encontrar la pagina que estabas buscando.
+  </p>
+  <div class="mt-10 flex items-center justify-center gap-x-6">
+    <a
+      href="/"
+      class="relative w-1/2 sm:w-fit rounded-xl bg-secondary-800"
+    >
+      <span
+        class="flex items-center justify-center rounded-lg text-lg font-medium gap-2 px-4 py-2 bg-gradient-to-tl to-orange-500 from-orange-400 text-neutral-800 hover:-translate-y-1 will-change-transform transition-transform"
+      >
+        Volver al inicio
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-5 h-5 transition-all duration-150 ease-in group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+        >
+          <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path d="M17 7l-10 10" />
+          <path d="M8 7l9 0l0 9" />
+        </svg>
+      </span>
+    </a>
+    <!-- <a
+      href="/"
+      class="text-sm font-semibold text-neutral-900"
+    >
+      Contactanos por email <span aria-hidden="true">&rarr;</span>
+    </a> -->
+  </div>
+</div>
+{% endblock %}

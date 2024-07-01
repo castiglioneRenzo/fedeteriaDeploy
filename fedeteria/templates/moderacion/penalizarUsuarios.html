@@ -1,0 +1,143 @@
+{% extends 'basic-structure-moderacion.html' %}{% block title %}
+<title>Trueques en proceso | Moderacion | Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<a
+  href="/moderacion"
+  class="font-semibold text-neutral-400 hover:underline"
+>
+  Moderacion
+</a>
+
+<span class="mx-5 font-bold text-neutral-500"> / </span>
+
+<a
+  href="/moderacion/trueques-en-proceso"
+  class="font-semibold text-neutral-400 hover:underline"
+>
+  Trueques en proceso
+</a>
+<span class="mx-5 font-bold text-neutral-500"> / </span>
+<a
+  href="/moderacion/penalizarUsuarios"
+  class="font-semibold text-neutral-400 hover:underline"
+>
+  Penalizar Usuarios
+</a>
+{% endblock %} {% block main %}
+
+<div class="border rounded-md bg-gray-100 shadow-md mx-auto flex w-9/12 flex-col items-center justify-around px-2 py-8">
+    <h1 class="text-2xl font-semibold mb-4">Penalizar Usuarios</h1>
+    <form
+        class="w-1/2 md:w-full flex flex-col items-center"
+        method="post"
+    >
+        {% csrf_token %}
+        <!-- Usuario 1 -->
+        <div class="md:w-1/2 bg-gray-300 rounded-lg p-6 mb-6 text-center">
+            <div class="flex md:w-5/6 items-center rounded-lg border border-neutral-200 bg-white p-3">
+                <img
+                    src="/static{{usuario1.avatar}}"
+                    class="w-10 h-10 md:w-10 md:h-10 object-cover object-center ring-2 ring-orange-300 rounded-full"
+                />
+                <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                        {{usuario1.user.first_name}} {{usuario1.user.last_name}}
+                    </span>
+                </p>
+            </div>
+            <!-- Estrellas Usuario 1 -->
+            <p class="py-3 text-left select-none text-neutral-800">
+                <span class=" text-left text-sm font-semibold">
+                    Cantidad de estrellas a restar:
+                </span>
+            </p>
+            <div class="flex justify-left">
+                <input type="hidden" name="calificacion_usuario1" id="calificacion-usuario1-input">
+                <span class="star-usuario1 cursor-pointer text-gray-400 text-4xl hover:text-red-600" data-value="1">&#9733;</span>
+                <span class="star-usuario1 cursor-pointer text-gray-400 text-4xl hover:text-red-600" data-value="2">&#9733;</span>
+                <span class="star-usuario1 cursor-pointer text-gray-400 text-4xl hover:text-red-600" data-value="3">&#9733;</span>
+                <span class="star-usuario1 cursor-pointer text-gray-400 text-4xl hover:text-red-600" data-value="4">&#9733;</span>
+                <span class="star-usuario1 cursor-pointer text-gray-400 text-4xl hover:text-red-600" data-value="5">&#9733;</span>
+            </div>
+
+        </div>
+
+        <!-- Usuario 2 -->
+        <div class="md:w-1/2 bg-gray-300 rounded-lg p-6 mb-6 text-center">
+            <div class="flex md:w-5/6 items-center rounded-lg border border-neutral-200 bg-white p-3">
+                <img
+                    src="/static{{usuario2.avatar}}"
+                    class="w-10 h-10 md:w-10 md:h-10 object-cover object-center ring-2 ring-orange-300 rounded-full"
+                />
+                <p class="ms-3 select-none text-neutral-800">
+                    <span class="block text-sm font-semibold">
+                        {{usuario2.user.first_name}} {{usuario2.user.last_name}}
+                    </span>
+                </p>
+            </div>
+
+            <!-- Estrellas Usuario 2 -->
+            <p class="py-3 text-left select-none text-neutral-800">
+                <span class=" text-left text-sm font-semibold">
+                    Cantidad de estrellas a restar:
+                </span>
+            </p>
+            <div class="flex justify-left">
+                <input type="hidden" name="calificacion_usuario2" id="calificacion-usuario2-input">
+                <span class="star-usuario2 cursor-pointer text-gray-400 text-4xl hover:text-red-600" data-value="1">&#9733;</span>
+                <span class="star-usuario2 cursor-pointer text-gray-400 text-4xl hover:text-red-600" data-value="2">&#9733;</span>
+                <span class="star-usuario2 cursor-pointer text-gray-400 text-4xl hover:text-red-600" data-value="3">&#9733;</span>
+                <span class="star-usuario2 cursor-pointer text-gray-400 text-4xl hover:text-red-600" data-value="4">&#9733;</span>
+                <span class="star-usuario2 cursor-pointer text-gray-400 text-4xl hover:text-red-600" data-value="5">&#9733;</span>
+            </div>
+    
+        </div>
+        <button
+            type="submit"
+            class="group/link flex w-48 items-center justify-center gap-2 px-4 py-2 text-base font-medium text-orange-600 transition-all duration-300 transform bg-orange-200 rounded hover:bg-orange-400 hover:text-orange-900 focus:bg-orange-400 focus:outline-none"
+        >
+            Enviar Penalizacion
+        </button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const starsUsuario1 = document.querySelectorAll('.star-usuario1');
+            const starsUsuario2 = document.querySelectorAll('.star-usuario2');
+            const calificacionUsuario1Input = document.getElementById('calificacion-usuario1-input');
+            const calificacionUsuario2Input = document.getElementById('calificacion-usuario2-input');
+    
+            starsUsuario1.forEach(star => {
+                star.addEventListener('click', () => {
+                    starsUsuario1.forEach(s => s.classList.remove('text-red-600', 'selected'));
+                    star.classList.add('text-red-600', 'selected');
+                    let prevSibling = star.previousElementSibling;
+                    while (prevSibling) {
+                        prevSibling.classList.add('text-red-600', 'selected');
+                        prevSibling = prevSibling.previousElementSibling;
+                    }
+                    const ratingValue = star.getAttribute('data-value');
+                    calificacionUsuario1Input.value = ratingValue;
+                    console.log(`Calificación seleccionada para Usuario 1: ${ratingValue}`);
+                });
+            });
+    
+            starsUsuario2.forEach(star => {
+                star.addEventListener('click', () => {
+                    starsUsuario2.forEach(s => s.classList.remove('text-red-600', 'selected'));
+                    star.classList.add('text-red-600', 'selected');
+                    let prevSibling = star.previousElementSibling;
+                    while (prevSibling) {
+                        prevSibling.classList.add('text-red-600', 'selected');
+                        prevSibling = prevSibling.previousElementSibling;
+                    }
+                    const ratingValue = star.getAttribute('data-value');
+                    calificacionUsuario2Input.value = ratingValue;
+                    console.log(`Calificación seleccionada para Usuario 2: ${ratingValue}`);
+                });
+            });
+        });
+    </script>
+</div>
+
+{% endblock %} 

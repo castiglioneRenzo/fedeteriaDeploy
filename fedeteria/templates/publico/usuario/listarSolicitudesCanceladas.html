@@ -1,0 +1,185 @@
+{% extends 'basic-structure-w-sidebar.html' %}{% block title %}
+<title>Mis productos | Perfil | Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<a
+  href="/perfil"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Perfil
+</a>
+
+<span class="mx-5 font-bold text-gray-500"> / </span>
+
+<a
+  href="/perfil/solicitudesCanceladas"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Trueques cancelados
+</a>
+{% endblock %} {% block main %}
+<script>
+  async function getImagenProducto(id){
+    try {
+      const url = 'http://127.0.0.1:8000/api/v1/imgprincipal/' + id;
+      const response = await fetch(url);
+      if(!response.ok){
+        throw new Error("Error en la solicitud");
+      }
+      //response.text().then((value) => {console.log(value);});
+      return response.json();
+    } catch (error) {
+      console.log(error)
+    }
+  }
+</script>
+
+<!-- Mensajes -->
+
+{% if messages %} 
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div
+            class="bg-red-500 text-white p-4 rounded-lg shadow-md"
+            role="alert"
+        >
+            {{ message }}
+        </div>
+        {% else %}
+        <div
+            class="bg-green-500 text-white p-4 rounded-lg shadow-md"
+            role="alert"
+        >
+            {{ message }}
+        </div>        
+        {% endif %}
+    {% endfor %} 
+{% endif %}
+
+
+
+
+
+<!--  -->
+
+
+
+
+
+<div
+    class="max-w-[95vw] sm:max-w-5xl w-full border py-8 px-2 sm:px-16 rounded-lg bg-gray-100 shadow-md"
+>
+      <!-- Solicitudes iniciadas por otros -->
+
+      <h1 class="font-semibold tracking-wide underline text-2xl mb-4">
+        Trueques cancelados
+      </h1>
+       {% if trueques %}
+        <ul
+          role="list"
+          class=""
+        >
+          {% for trueque in trueques %}
+          {% if trueque.estado == 'Cancelado' %}
+          <li
+            class="relative group flex justify-between gap-x-6 py-5 px-2 flex-wrap transition-all duration-200 ease-in mb-4 hover:rounded-md hover:bg-neutral-200/70"
+          >
+            <div
+              class="flex flex-wrap sm:flex-nowrap justify-between basis-full w-full"
+            >
+              <!-- <div class="flex min-w-0 gap-x-8"> -->
+              <div class="grid grid-cols-3 gap-x-8">
+                <div class="min-w-0 flex-initial">
+                  <img
+                    class="h-32 w-32 flex-none rounded-md bg-neutral-50 object-cover imagen-trueque"
+                    src="{{ trueque.producto_1.id }}"
+                    alt="{{ trueque.producto_1.id }}"
+                  />                  
+                  <p
+                    class="h-6 overflow-hidden text-sm truncate font-semibold leading-6 text-neutral-900"
+                  >
+                    {{trueque.producto_1.nombre}}
+                  </p>
+                </div>
+
+
+                <div class="min-w-0 flex-auto">
+                  <img 
+                    class="h-32 w-32 flex-none rounded-md  object-cover"
+                    src="/static/public/icons/intercambio.svg">                    
+                  </img>
+                </div>
+
+
+                <div class="min-w-0 flex-initial">
+                  <img
+                    class="h-32 w-32 flex-none rounded-md bg-neutral-50 object-cover imagen-trueque"
+                    src="{{ trueque.producto_2.id }}"
+                    alt="{{ trueque.producto_2.id }}"
+                  />
+                  <p
+                    class="h-6 overflow-hidden text-sm truncate font-semibold leading-6 text-neutral-900"
+                  >
+                    {{trueque.producto_2.nombre}}
+                  </p>
+                </div>                
+              </div>
+              <div
+                class="shrink-0 content-end flex flex-row-reverse w-full justify-between sm:w-fit sm:justify-start sm:flex-col sm:items-end pl-4"
+              >
+
+                <div class="mt-1 flex items-center gap-x-1.5">              
+                  <p class="text-s leading-5 text-neutral-500">
+                    {{trueque.estado}}
+                  </p>
+                </div>
+
+                <p class="mt-1 text-xs leading-5 text-neutral-500">
+                  Fecha inicio: {{ trueque.fecha_inicio }}
+                </p>
+              </div>
+            </div>
+          </li>
+          {% endif %}          
+          {% endfor %}
+          <script>
+            let imagenes_t = document.getElementsByClassName('imagen-trueque');
+            for (let img of imagenes_t){
+              let id = img.alt;              
+              getImagenProducto(id).then((value) => {img.src=value.image;
+              console.log(value.image)});              
+            }
+          </script>
+        </ul>
+        {% else %}
+        <div class="min-h-64 py-8 px-8 w-full flex flex-col items-center gap-4">
+          <p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-24 w-24 text-neutral-500"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+              <path d="M9 13h.01" />
+              <path d="M15 13h.01" />
+              <path d="M11 17h2" />
+            </svg>
+          </p>
+          <h3 class="text-lg font-medium text-neutral-500">
+            No hay ningun trueque cancelado
+          </h3>
+        </div>
+        {% endif %}
+    </div>
+{% endblock main %}

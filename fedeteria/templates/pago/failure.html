@@ -1,0 +1,103 @@
+{% extends 'basic-structure-w-footer.html' %}{% block title %}
+<title>Registrarme | Fedeteria</title>
+{% endblock %} {% block main %}
+<div class="my-auto flex min-h-full flex-col justify-center px-6 py-8 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    {% load static %}
+    <img
+      width="100"
+      height="100"
+      class="h-fit w-fit object-contain"
+      src="{% static 'publico/assets/Fedeteria_Horizontal.svg' %}"
+      alt="Logo Fedeteria"
+    />
+  </div>
+
+  <div
+  class="mt-10 max-w-[95vw] sm:mx-auto sm:w-full sm:max-w-5xl h-full px-8 py-12 border rounded-lg flex flex-col gap-4 items-center justify-center"
+  >
+    <style>
+      .error-cross {
+        width: 80px;
+        height: 115px;
+        margin: 0 auto;
+
+        .cross-icon {
+          width: 80px;
+          height: 80px;
+          position: relative;
+          border-radius: 50%;
+          box-sizing: content-box;
+          border: 4px solid #f44336;
+
+          &::before,
+          &::after {
+            content: "";
+            width: 60px;
+            height: 5px;
+            background-color: #f44336;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            border-radius: 2px;
+          }
+
+          &::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+          }
+
+          .icon-circle {
+            top: -4px;
+            left: -4px;
+            z-index: 10;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            position: absolute;
+            box-sizing: content-box;
+            border: 4px solid rgba(244, 67, 54, 0.5);
+          }
+        }
+      }
+    </style>
+    <div class="error-cross">
+      <div class="cross-icon">
+        <div class="icon-circle"></div>
+      </div>
+    </div>
+    <h1 class="text-2xl font-medium tracking-wider underline">
+      No pudimos procesar tu pago
+    </h1>
+    <p>Intenta de nuevo más tarde.</p>
+    <a
+    class="flex transform items-center rounded-md px-8 py-2 text-neutral-50 bg-orange-300 transition-colors duration-300 hover:bg-orange-200 hover:text-neutral-700"
+    href="{% url 'publico:verProductosPerfil' %}"
+    >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="h-5 w-5"
+    >
+      <path
+        stroke="none"
+        d="M0 0h24v24H0z"
+        fill="none"
+      />
+      <path d="M15 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+      <path d="M21 12h-13l3 -3" />
+      <path d="M11 15l-3 -3" />
+    </svg>
+
+    <span class="mx-2 text-sm font-medium">Ir a Mis Productos</span>
+    </a>
+  </div>
+</div>
+{% endblock %}

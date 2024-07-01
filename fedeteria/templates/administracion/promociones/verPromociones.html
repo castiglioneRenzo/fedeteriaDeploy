@@ -1,0 +1,96 @@
+{% extends 'basic-structure-administracion.html' %}
+<!--  -->
+{% block title %}
+<title>Panel administracion | Fedeteria</title>
+{% endblock %}
+<!--  -->
+{% block second_navbar %}
+<a
+  href="/administracion"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Administracion
+</a>
+<span class="mx-5 font-bold text-gray-500"> / </span>
+<a
+  href="/administracion"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Trueques por sucursal
+</a>
+
+{% endblock %}
+<!--  -->
+{% block main %}
+
+<div
+  class="my-auto flex min-h-full flex-col justify-center max-w-[95vw] sm:max-w-5xl w-full border py-8 px-16 rounded-lg bg-gray-100 shadow-md"
+>
+  <h2>Promociones activas</h2>
+  <div
+    class="mt-10 flex gap-4 gap-y-8 flex-wrap sm:mx-auto sm:w-full sm:max-w-2xl"
+  >
+    {% if promociones %}
+    <!--  -->
+    {% for promo in promociones %}
+    <div>
+      <div
+        class="max-w-xs overflow-hidden bg-neutral-200 rounded-lg shadow-lg border border-neutral-400"
+      >
+        <div class="px-4 py-2">
+          <p class="mt-1 text-base font-medium text-neutral-800">
+            {{ promo.datos.promocion }}
+          </p>
+        </div>
+
+        <img
+          class="object-cover w-full h-64 mt-2"
+          src="{{ promo.imagen }}"
+          alt="{{ promo.datos.nombre }}"
+        />
+
+        <div class="flex items-center justify-between px-4 py-2 bg-neutral-400">
+          <h1 class="text-lg font-semibold text-neutral-800">
+            {{ promo.datos.nombre }}
+          </h1>
+        </div>
+      </div>
+      <a
+        href="/administracion/promocion/eliminar/{{promo.datos.id}}"
+        class="basis-2/5 sm:basis-auto flex items-center gap-2 hover:-translate-y-0.5 w-fit mt-2 px-3 py-1 text-sm font-medium rounded-md bg-red-300 transition-all"
+      >
+        Eliminar
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-5 h-5"
+        >
+          <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path d="M4 7l16 0" />
+          <path d="M10 11l0 6" />
+          <path d="M14 11l0 6" />
+          <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+          <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+        </svg>
+      </a>
+    </div>
+    {% endfor %}
+    <!--  -->
+    {% else %}
+    <h1>No hay promociones aun</h1>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

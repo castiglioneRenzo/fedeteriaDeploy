@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirigiendo a MercadoPago</title>
+    <script src="{% static 'publico/js/mercado_pago.js' %}"></script>
+    <!-- <script 
+            type="text/javascript"
+            src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js">
+    </script> -->
+
+</head>
+<body>
+    <!-- <script src="https://sdk.mercadopago.com/js/v2"></script> -->
+    <script>
+        const mp = new MercadoPago('{{ public_key }}');
+        const bricksBuilder = mp.bricks();
+        mp.checkout({
+            preference: {
+                id: '{{ preference_id }}'
+            },
+            autoOpen: true, // abre automáticamente el Checkout Pro
+        })
+    </script>
+     <div id="wallet_container"></div>
+     <script>
+     mp.bricks().create("wallet", "wallet_container", {
+        initialization: {
+            preferenceId: "{{ preference_id }}",
+        },
+     customization: {
+      texts: {
+       valueProp: 'smart_option',
+      },
+      },
+     });
+    </script>
+</body>
+</html>

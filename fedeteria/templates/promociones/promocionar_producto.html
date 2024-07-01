@@ -1,0 +1,105 @@
+{% extends 'basic-structure-w-sidebar.html' %}
+{% load static %}
+{% block title %}
+<title>Ver Perfil | Fedeteria</title>
+{% endblock %} 
+{% block second_navbar %}
+<a
+  href="/perfil"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Perfil
+</a>
+
+{% endblock %} 
+{% block main %}
+<script>
+    async function getImagenProducto(id){
+      try {
+        const url = 'http://127.0.0.1:8000/api/v1/imgprincipal/' + id;
+        const response = await fetch(url);
+        if(!response.ok){
+          throw new Error("Error en la solicitud" + id);
+        }
+        //response.text().then((value) => {console.log(value);});
+        return response.json();
+      } catch (error) {
+        console.log(error)
+      }
+    }
+</script> 
+  <!-- <div class="row-start-1 row-span-1">
+    <h1 class="text-2xl font-semibold">Promocionar Producto</h1>
+    <p class="text-sm text-gray-500">
+        Promociona tu producto para que más personas lo vean y puedan comprarlo.
+    </p>
+  </div> -->
+
+
+<!--  -->
+
+  <div class="flex items-baseline justify-between border-b border-neutral-400 pt-6 pb-8 mb-8">
+    <div class="flex flex-col space-y-4"> 
+      <h1 class="text-4xl font-bold tracking-tight text-neutral-900">
+        Promocionar Producto
+      </h1>
+      <p class="text-sm text-gray-500">
+        Promociona tu producto para que más personas lo vean y puedan comprarlo.
+      </p> 
+    </div>    
+  </div>  
+
+
+<!--  -->
+
+
+<div class="flex items-center">  
+  <div class="border rounded-md p-8 bg-gray-100 shadow-md md:px-32 md:py-8">
+    <div class="grid grid-cols-2 gap-x-4 divide-x-8">
+        <div class="px-8">
+            <!-- Detalles del producto e imagen -->
+            <p class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+                {{producto.nombre}}
+            </p>
+            <div id="img-container" class="max-w-64 hidden h-auto grid-cols-2 aspect-[16/10]  overflow-hidden rounded-lg sm:block">
+                <img
+                id="imagen-producto"
+                name="imagen-producto"
+                src=""
+                alt={{producto.nombre}}
+                class="h-full w-full object-cover object-center rounded-lg"   
+                style="visibility: hidden;"           
+                />
+            </div>
+            <script>
+                getImagenProducto("{{producto.id}}").then((data) => {
+                    document.getElementById("imagen-producto").src = data.image;
+                });
+                document.getElementById("imagen-producto").style.visibility = "visible";
+            </script>
+        </div>
+        <div class="px-8">
+            <h1 class="text-2xl font-semibold">Promocionar Producto</h1>
+            <form action="{% url 'promociones:promocionar_producto' producto.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="duracion" class="block text-sm font-medium text-gray-700">Seleccionar Duración: </label>
+                    <select name="duracion" id="duracion" class="mt-2 h-9 min-w-12 max-w-48 w-full pl-3.5 pr-[1.875rem] block rounded-md border-0 px-2 py-1.5 text-neutral-900 shadow-sm outline-none ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:ring-1 hover:ring-amber-700 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6" required>
+                        <option value="7">1 semana -- $1000 </option>
+                        <option value="15">2 semanas -- $1800 </option>
+                        <option value="30">1 mes -- $3500 </option>
+                    </select>
+                </div>
+                <button 
+                  type="submit"                  
+                  class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-orange-400 px-8 py-3 text-base font-medium text-white hover:bg-orange-600 transition-colors"
+                >
+
+                    Promocionar
+              </button>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d"
+            }
+          }
+        }
+      }
+    </script>
+    {% block title %} {% endblock %}
+    <style type="text/css">
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-button {
+        width: 0px;
+        height: 0px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #c4c4c4;
+        border: 0px none #db0a0a;
+        border-radius: 2px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #ffffff;
+      }
+      ::-webkit-scrollbar-thumb:active {
+        background: #999999;
+      }
+      ::-webkit-scrollbar-track {
+        background: #666666;
+        border: 0px none #282f32;
+        border-radius: 2px;
+      }
+      ::-webkit-scrollbar-track:hover {
+        background: #666666;
+      }
+      ::-webkit-scrollbar-track:active {
+        background: #333333;
+      }
+      ::-webkit-scrollbar-corner {
+        background: transparent;
+      }
+    </style>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'fedeteria_logos/favicon.ico' %}">
+  </head>
+  <body class="relative h-auto min-h-screen w-full overflow-x-hidden">
+    <div class="flex w-full flex-row flex-wrap">
+      <!-- basic navbar -->
+      <nav
+        class="fixed z-40 flex h-24 w-full basis-full flex-col bg-neutral-800 sm:h-16"
+      >
+        <div class="mx-auto h-24 w-full px-2 sm:h-16 sm:px-6 lg:px-8">
+          <div class="relative z-40 flex w-full items-center justify-between">
+            <div
+              class="flex flex-1 flex-col items-center justify-center sm:flex-row sm:justify-start sm:gap-8"
+            >
+              <div class="mr-8 w-fit">
+                <a
+                  href="/"
+                  class="relative flex h-16 w-56 flex-shrink-0 items-center justify-center p-2 drop-shadow-lg"
+                >
+                  <img
+                    width="200"
+                    height="50"
+                    class="h-8 w-32 object-contain"
+                    src="{% static 'publico/assets/Fedeteria_Solo_Logo.svg' %}"
+                    alt="Your Company"
+                  />
+                  <img
+                    width="200"
+                    height="50"
+                    class="h-16 w-32 object-contain invert"
+                    src="{% static 'publico/assets/Fedeteria_Solo_Texto.svg' %}"
+                    alt="Your Company"
+                  />
+                </a>
+              </div>
+              <div
+                class="flex w-auto min-w-full flex-row items-center justify-evenly sm:justify-start"
+              >
+                <div class="flex space-x-4">
+                  {% if selected == 'inicio' %}
+                  <a
+                    href="/"
+                    class="group relative block rounded-md px-3 py-2 text-sm font-bold text-orange-300 transition-colors duration-150 hover:text-orange-400"
+                    aria-current="page"
+                  >
+                  {% else %}
+                  <a
+                    href="/"
+                    class="group relative block rounded-md px-3 py-2 text-sm font-bold text-neutral-500 transition-colors duration-150 hover:text-neutral-200"                    
+                  >
+                  {% endif %}
+                    Inicio
+                    <span
+                      class="absolute bottom-2 left-0 h-0.5 w-0 bg-neutral-200 transition-all duration-150 group-hover:w-10/12 sm:left-1/2 sm:-translate-x-[50%]"
+                    ></span>
+                  </a>
+                  {% if selected == 'productos' %}
+                  <a
+                    href="/productos"
+                    class="group relative block rounded-md px-3 py-2 text-sm font-bold text-orange-300 transition-colors duration-150 hover:text-orange-400"
+                    aria-current="page"
+                  >
+                  {% else %}
+                  <a
+                    href="/productos"
+                    class="group relative block rounded-md px-3 py-2 text-sm font-bold text-neutral-500 transition-colors duration-150 hover:text-neutral-200"
+                  >
+                  {% endif %}
+                    Productos
+                    <span
+                      class="absolute bottom-2 left-0 h-0.5 w-0 bg-neutral-200 transition-all duration-150 group-hover:w-10/12 sm:left-1/2 sm:-translate-x-[50%]"
+                    ></span>
+                  </a>
+                  {% if selected == 'sucursales' %}
+                  <a
+                    href="/sucursales"
+                    class="group relative block rounded-md px-3 py-2 text-sm font-bold text-orange-300 transition-colors duration-150 hover:text-orange-400"
+                    aria-current="page"
+                  >
+                  {% else %}
+                  <a
+                    href="/sucursales"
+                    class="group relative block rounded-md px-3 py-2 text-sm font-bold text-neutral-500 transition-colors duration-150 hover:text-neutral-200"
+                  >
+                  {% endif %}
+                    Sucursales
+                    <span
+                      class="absolute bottom-2 left-0 h-0.5 w-0 bg-neutral-200 transition-all duration-150 group-hover:w-10/12 sm:left-1/2 sm:-translate-x-[50%]"
+                    ></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="absolute right-0 top-4 flex w-fit items-center gap-1 pr-1 sm:static sm:inset-auto sm:inset-y-0 sm:ml-6 sm:gap-4 sm:pr-0"
+            >
+             
+              <input
+                type="checkbox"
+                name="usermenuopen"
+                id="usermenuopen"
+                class="peer/usermenuopen absolute right-5 top-5 hidden"
+              />
+              <label
+                for="usermenuopen"
+                class="group flex cursor-pointer items-center gap-1 rounded-md bg-neutral-900 px-2 py-1 text-neutral-400 transition-transform duration-100 ease-in hover:bg-neutral-700 peer-checked/usermenuopen:bg-neutral-700 peer-checked/usermenuopen:text-orange-300"
+              >
+                <span class="sr-only">Abrir menu de usuario</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class=""
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="hidden h-4 w-4 transition-all duration-100 group-hover:mt-1 md:block"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path d="M6 9l6 6l6 -6" />
+                </svg>
+              </label>
+              <div
+                class="absolute right-0 top-14 h-0 w-48 origin-top-right scale-95 select-none overflow-hidden rounded-md bg-neutral-700/90 opacity-0 shadow-sm backdrop-blur transition-all duration-300 ease-in-out peer-checked/usermenuopen:block peer-checked/usermenuopen:h-auto peer-checked/usermenuopen:scale-100 peer-checked/usermenuopen:opacity-100"
+              >
+
+              <p
+                class="flex items-center text-center gap-4 underline text-sm font-medium px-4 py-2 text-orange-200"
+              >
+                Hola, {{ user.first_name }} {{ user.last_name }}
+              </p>
+
+              <a
+                href="/perfil"
+                class="flex items-center gap-4 hover:bg-neutral-900 px-4 py-2 text-sm text-neutral-200 hover:text-orange-200"
+                role="menuitem"
+                tabindex="{-1}"
+                id="user-menu-item-0"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path d="M10 9a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+                  <path d="M4 16v2a2 2 0 0 0 2 2h2" />
+                  <path d="M16 4h2a2 2 0 0 1 2 2v2" />
+                  <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+                  <path d="M8 16a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2" />
+                </svg>
+                Perfil
+              </a>
+              <!-- <a
+                href="/perfil/notificaciones"
+                class="flex items-center gap-4 hover:bg-neutral-900 px-4 py-2 text-sm text-neutral-200 hover:text-orange-200"
+                role="menuitem"
+                tabindex="{-1}"
+                id="user-menu-item-0"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"
+                  />
+                  <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+                </svg>
+                Notificaciones
+              </a> -->
+
+              <a
+                href="/moderacion"
+                class="flex items-center gap-4 hover:bg-neutral-900 px-4 py-2 text-sm text-neutral-200 hover:text-orange-200"
+                role="menuitem"
+                tabindex="{-1}"
+                id="user-menu-item-1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path d="M6 21v-2a4 4 0 0 1 4 -4h2" />
+                  <path
+                    d="M22 16c0 4 -2.5 6 -3.5 6s-3.5 -2 -3.5 -6c1 0 2.5 -.5 3.5 -1.5c1 1 2.5 1.5 3.5 1.5z"
+                  />
+                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                </svg>
+                Panel Moderacion
+              </a>
+              {% if perms.publico.admin %}
+              <!-- <a
+                href="/administracion"
+                class="flex items-center gap-4 hover:bg-neutral-900 px-4 py-2 text-sm text-neutral-200 hover:text-orange-200"
+                role="menuitem"
+                tabindex="{-1}"
+                id="user-menu-item-1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M3 4m0 1a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1z"
+                  />
+                  <path d="M7 20h10" />
+                  <path d="M9 16v4" />
+                  <path d="M15 16v4" />
+                  <path d="M9 12v-4" />
+                  <path d="M12 12v-1" />
+                  <path d="M15 12v-2" />
+                  <path d="M12 12v-1" />
+                </svg>
+                Estadisticas
+              </a> -->
+              <a
+                href="/administracion"
+                class="flex items-center gap-4 hover:bg-neutral-900 px-4 py-2 text-sm text-neutral-200 hover:text-orange-200"
+                role="menuitem"
+                tabindex="{-1}"
+                id="user-menu-item-1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                >
+<path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4" /><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /><path d="M12 16h.01" /></svg>
+                Panel admin
+              </a>   {% endif %}
+
+              <a
+                href="/logout"
+                class="flex items-center gap-4 hover:bg-neutral-900 px-4 py-2 text-sm text-neutral-200 hover:text-orange-200"
+                role="menuitem"
+                tabindex="{-1}"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"
+                  />
+                  <path d="M9 12h12l-3 -3" />
+                  <path d="M18 15l3 -3" />
+                </svg>
+                Cerrar sesión
+              </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- input para la sidebar -->
+      <input
+        type="checkbox"
+        name="sidebar-open"
+        id="sidebar-open"
+        class="peer/sidebaropen absolute left-5 top-5 hidden"
+      />
+
+      <!-- segunda navbar con boton de abrir sidebar -->
+      <label
+        for="sidebar-open"
+        class="fixed z-20 mt-2 top-24 sm:top-16 left-[21rem] transition-all duration-75 peer-checked/sidebaropen:left-4 rotate-180 peer-checked/sidebaropen:rotate-0 cursor-pointer rounded-md bg-neutral-800 px-2 py-1.5 text-neutral-400"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-5 w-5"
+        >
+          <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"
+          />
+          <path d="M9 4v16" />
+          <path d="M14 10l2 2l-2 2" />
+        </svg>
+      </label>
+      <header
+        class="fixed top-24 sm:left-[20rem] transition-all duration-75 peer-checked/sidebaropen:left-0 z-10 flex h-12 w-full items-center gap-4 bg-neutral-700 px-1 sm:top-16 sm:gap-8 sm:px-4"
+      >
+        <div
+          class="flex items-center overflow-x-auto whitespace-nowrap rounded-md bg-neutral-800 ml-16 px-4 py-1 text-neutral-300"
+        >
+          <a
+            href="{% url 'publico:inicio' %}"
+            class="text-gray-500"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
+              />
+            </svg>
+          </a>
+
+          <span class="mx-5 font-bold text-gray-500"> / </span>
+          {% block second_navbar %} {% endblock %}
+        </div>
+      </header>
+
+      <!-- background blur para mobile -->
+      <div
+        class="fixed inset-0 z-50 bg-neutral-500/20 backdrop-blur peer-checked/sidebaropen:hidden md:hidden"
+      ></div>
+      <!-- sidebar que se muestra siempre en desktop y en mobile se puede cerrar -->
+      <aside
+        class="pointer-events-none fixed left-0 z-50 flex h-screen w-full opacity-100 transition-all peer-checked/sidebaropen:-left-full sm:basis-4/12 md:relative lg:basis-3/12 peer-checked/sidebaropen:basis-0"
+      >
+        <div
+          class="pointer-events-auto fixed top-0 z-50 flex h-screen w-full max-w-[24rem] flex-shrink-0 flex-col gap-1 bg-neutral-800 text-base sm:max-w-[20rem] md:mt-16 md:h-[calc(100vh-4rem)]"
+        >
+          <div class="flex flex-1 flex-col justify-between overflow-hidden">
+            <nav class="space-y-6 overflow-y-auto px-8 py-2 md:px-10">
+              <div class="space-y-3">
+                <label
+                for="sidebar-open"
+                class="mb-4 ml-auto flex w-fit transform cursor-pointer items-center rounded-lg bg-neutral-900 px-3 py-2 text-neutral-400 transition-colors duration-300 md:hidden"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="rotate-180"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"
+                  />
+                  <path d="M9 4v16" />
+                  <path d="M14 10l2 2l-2 2" />
+                </svg>
+
+                <span class="mx-2 text-sm font-medium">Cerrar</span>
+              </label>
+                <!-- <label class="px-3 text-xs uppercase text-gray-600">
+                  Estadisticas
+                </label>
+
+                {% if sidebar_selected == "productos-agregar-producto" %}
+                <a
+                  class="flex transform items-center rounded-lg bg-orange-300 px-3 py-2 text-gray-700 transition-colors duration-300"
+                  href="#"
+                >                
+                {% else %}
+                <a                  
+                  class="flex transform items-center rounded-lg px-3 py-2 text-gray-300 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+                  href="{% url 'publico:cargarProducto' %}"
+                >
+                {% endif %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-5 w-5"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M9 12l6 0" />
+                    <path d="M12 9l0 6" />
+                    <path
+                      d="M4 6v-1a1 1 0 0 1 1 -1h1m5 0h2m5 0h1a1 1 0 0 1 1 1v1m0 5v2m0 5v1a1 1 0 0 1 -1 1h-1m-5 0h-2m-5 0h-1a1 1 0 0 1 -1 -1v-1m0 -5v-2m0 -5"
+                    />
+                  </svg>
+
+                  <span class="mx-2 text-sm font-medium">Ventas sucursales</span>
+                </a>
+                {% if sidebar_selected == "productos-mis-productos" %}
+                <a
+                  class="flex transform items-center rounded-lg bg-orange-300 px-3 py-2 text-gray-700 transition-colors duration-300"
+                  href="#"
+                >                
+                {% else %}
+                <a                  
+                  class="flex transform items-center rounded-lg px-3 py-2 text-gray-300 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+                  href="/perfil/productos"
+                >
+                {% endif %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-5 w-5"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M7 16.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
+                    <path d="M2 13.5v5.5l5 3" />
+                    <path d="M7 16.545l5 -3.03" />
+                    <path d="M17 16.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
+                    <path d="M12 19l5 3" />
+                    <path d="M17 16.5l5 -3" />
+                    <path d="M12 13.5v-5.5l-5 -3l5 -3l5 3v5.5" />
+                    <path d="M7 5.03v5.455" />
+                    <path d="M12 8l5 -3" />
+                  </svg>
+
+                  <span class="mx-2 text-sm font-medium">Ver ultimos intercambios</span>
+                </a>
+
+                {% if sidebar_selected == "productos-productos-intercambiados" %}
+                <a
+                  class="flex transform items-center rounded-lg bg-orange-300 px-3 py-2 text-gray-700 transition-colors duration-300"
+                  href="#"
+                >                
+                {% else %}
+                <a                  
+                  class="flex transform items-center rounded-lg px-3 py-2 text-gray-300 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+                  href="#"
+                >
+                {% endif %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-5 w-5"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M3 6a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                    <path d="M21 11v-3a2 2 0 0 0 -2 -2h-6l3 3m0 -6l-3 3" />
+                    <path d="M3 13v3a2 2 0 0 0 2 2h6l-3 -3m0 6l3 -3" />
+                    <path d="M15 18a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                  </svg>
+
+                  <span class="mx-2 text-sm font-medium">
+                    TEXTO AQUI
+                  </span>
+                </a>
+
+                {% if sidebar_selected == "productos-promociones" %}
+                <a
+                  class="flex transform items-center rounded-lg bg-orange-300 px-3 py-2 text-gray-700 transition-colors duration-300"
+                  href="#"
+                >                
+                {% else %}
+                <a                  
+                  class="flex transform items-center rounded-lg px-3 py-2 text-gray-300 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+                  href="#"
+                >
+                {% endif %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-5 w-5"
+                  >
+                    <path
+                      stroke="none"
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path d="M12 12m-10 0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0" />
+                    <path d="M7 15v-4.5a1.5 1.5 0 0 1 3 0v4.5" />
+                    <path d="M7 13h3" />
+                    <path d="M14 9v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1z" />
+                  </svg>
+
+                  <span class="mx-2 text-sm font-medium">TEXTO AQUI</span>
+                </a>
+              </div> -->
+              <div class="space-y-3">
+                <label class="px-3 text-xs uppercase text-gray-600">
+                  Productos
+                </label>
+
+                {% if sidebar_selected == "productos-productos-sin-precio" %}
+                <a
+                  class="flex transform items-center rounded-lg bg-orange-300 px-3 py-2 text-gray-700 transition-colors duration-300"
+                  href="{% url 'moderacion:productos' %}"
+                >                
+                {% else %}
+                <a                  
+                  class="flex transform items-center rounded-lg px-3 py-2 text-gray-300 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+                  href="{% url 'moderacion:productos' %}"
+                >
+                {% endif %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-5 w-5"
+                  >
+<path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4c.96 0 1.84 .338 2.53 .901" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
+
+                  <span class="mx-2 text-sm font-medium">Productos sin precio</span>
+                </a>
+                
+              </div>
+              <div class="space-y-3">
+                <label class="px-3 text-xs uppercase text-gray-600">
+                  Trueques
+                </label>
+
+                {% if sidebar_selected == "trueques-trueques-en-proceso" %}
+                <a
+                  class="flex transform items-center rounded-lg bg-orange-300 px-3 py-2 text-gray-700 transition-colors duration-300"
+                  href="{% url 'moderacion:verTruequesEnProceso' %}"
+                >                
+                {% else %}
+                <a                  
+                  class="flex transform items-center rounded-lg px-3 py-2 text-gray-300 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+                  href="{% url 'moderacion:verTruequesEnProceso' %}"
+                >
+                {% endif %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-5 w-5"
+                  >
+<path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4c.96 0 1.84 .338 2.53 .901" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
+
+                  <span class="mx-2 text-sm font-medium">Trueques en proceso</span>
+                </a>
+                
+              </div>
+            </nav>
+            <div class="flex flex-shrink-0 flex-col gap-2 px-5 py-3 md:px-10">
+              <div class="pl-2">
+                {% if request.user.is_authenticated %}
+                <h1 class="text-3xl font-bold tracking-tight text-neutral-200">
+                  {{ request.user.first_name }} {{ request.user.last_name }}
+                </h1>
+                <p class="text-sm text-neutral-600">{{ request.user.email }}</p>
+                {% endif %}
+              </div>
+              {% if request.user.is_authenticated %}
+              <a
+                class="flex transform items-center rounded-lg px-3 py-2 text-gray-300 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+                href="/logout"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"
+                  />
+                  <path d="M9 12h12l-3 -3" />
+                  <path d="M18 15l3 -3" />
+                </svg>
+
+                <span class="mx-2 text-sm font-medium">Cerrar sesion</span>
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- aca el contenido principal de la pagina -->
+      <main
+        class="flex h-full w-full flex-col items-center justify-center py-48 sm:basis-8/12 lg:basis-9/12 peer-checked/sidebaropen:basis-full"
+      >
+        {% block main %} {% endblock %}
+      </main>
+    </div>
+  </body>
+</html>

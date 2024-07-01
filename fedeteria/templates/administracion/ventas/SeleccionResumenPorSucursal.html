@@ -1,0 +1,247 @@
+{% extends 'basic-structure-administracion.html' %}
+<!--  -->
+{% block title %}
+<title>Panel administracion | Fedeteria</title>
+{% endblock %}
+<!--  -->
+{% block second_navbar %}
+<a
+  href="/administracion"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Administracion
+</a>
+<span class="mx-5 font-bold text-gray-500"> / </span>
+<a
+  href="/administracion/estadisticas-ventas"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Ventas por sucursal
+</a>
+
+{% endblock %}
+<!--  -->
+{% block main %}
+<div class="my-auto flex min-h-full flex-col justify-center px-6 py-8 lg:px-8">
+  <!--  -->
+  <div class="relative w-full flex flex-col rounded-xl">
+    <div
+      class="relative mx-2 mt-4 w-auto flex flex-col gap-4 text-gray-700 shadow-none"
+    >
+      <h6
+        class="block font-sans text-base font-semibold leading-relaxed tracking-normal text-blue-gray-900 antialiased"
+      >
+        Ventas en las sucursales - Ultimo mes
+      </h6>
+      <p
+        class="block max-w-xl font-sans text-sm font-normal leading-normal text-gray-700 antialiased"
+      >
+        Cantidad total de ventas realizadas: {{cant_total}}.
+        <br />
+        Para mas informacion de una sucursal particular ingresar a los datos de
+        la misma.
+      </p>
+    </div>
+
+    <div
+      class="flex flex-col-reverse md:grid grid-cols-6 gap-16 place-items-center p-2"
+    >
+      <div
+        id="bar-chart"
+        class="py-6 mt-4 px-2 col-span-2 w-full"
+      ></div>
+      <div class="col-span-4 max-w-sm w-full px-4">
+        <div class="grid grid-cols-1 gap-4">
+          {% for sucursal in sucursales %}
+          <a
+            href="/administracion/estadisticas-ventas/{{ sucursal.id }}"
+            class="group/card max-w-sm w-full relative overflow-hidden flex flex-col justify-between gap-1 p-2 rounded-lg bg-orange-200/50 md:p-3 transition-all hover:bg-orange-200"
+          >
+            <div class="flex items-center gap-3">
+              <span class="p-2 stroke-orange-500 rounded-lg bg-orange-400/50">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke="none"
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                  <path
+                    d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"
+                  />
+                </svg>
+              </span>
+              <h2 class="text-xl font-semibold text-gray-800">
+                {{ sucursal.localidad }}
+              </h2>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-5 h-5 inline-flex transition-all group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5"
+              >
+                <path
+                  stroke="none"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path d="M17 7l-10 10" />
+                <path d="M8 7l9 0l0 9" />
+              </svg>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <input
+    type="hidden"
+    value="{{ cant_ventas_suc_1 }}"
+    id="cant_ventas_suc_1"
+  />
+  <input
+    type="hidden"
+    value="{{ cant_ventas_suc_2 }}"
+    id="cant_ventas_suc_2"
+  />
+  <input
+    type="hidden"
+    value="{{ cant_ventas_suc_3 }}"
+    id="cant_ventas_suc_3"
+  />
+  <input
+    type="hidden"
+    value="{{ cant_ventas_suc_4 }}"
+    id="cant_ventas_suc_4"
+  />
+  <input
+    type="hidden"
+    value="{{ cant_ventas_suc_5 }}"
+    id="cant_ventas_suc_5"
+  />
+  <input
+    type="hidden"
+    value="{{ cant_ventas_suc_6 }}"
+    id="cant_ventas_suc_6"
+  />
+  <script>
+    const chartConfig = {
+      series: [
+        {
+          name: "Ventas",
+          data: [
+            parseInt(document.getElementById("cant_ventas_suc_1").value),
+            parseInt(document.getElementById("cant_ventas_suc_2").value),
+            parseInt(document.getElementById("cant_ventas_suc_3").value),
+            parseInt(document.getElementById("cant_ventas_suc_4").value),
+            parseInt(document.getElementById("cant_ventas_suc_5").value),
+            parseInt(document.getElementById("cant_ventas_suc_6").value)
+          ]
+        }
+      ],
+      chart: {
+        type: "bar",
+        height: 500,
+        width: 500,
+        toolbar: {
+          show: false
+        }
+      },
+      title: {
+        show: ""
+      },
+      dataLabels: {
+        enabled: false
+      },
+      colors: ["#020617"],
+      plotOptions: {
+        bar: {
+          columnWidth: "40%",
+          borderRadius: 2
+        }
+      },
+      xaxis: {
+        axisTicks: {
+          show: false
+        },
+        axisBorder: {
+          show: false
+        },
+        labels: {
+          style: {
+            colors: "#616161",
+            fontSize: "12px",
+            fontFamily: "inherit",
+            fontWeight: 400
+          }
+        },
+        categories: [
+          "Capital",
+          "La Plata",
+          "Chivilcoy",
+          "Dolores",
+          "Berazategui",
+          "Bahia Blanca"
+        ]
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: "#616161",
+            fontSize: "12px",
+            fontFamily: "inherit",
+            fontWeight: 400
+          }
+        }
+      },
+      grid: {
+        show: true,
+        borderColor: "#dddddd",
+        strokeDashArray: 5,
+        xaxis: {
+          lines: {
+            show: true
+          }
+        },
+        padding: {
+          top: 5,
+          right: 20
+        }
+      },
+      fill: {
+        opacity: 0.8
+      },
+      tooltip: {
+        theme: "dark"
+      }
+    }
+
+    const chart = new ApexCharts(
+      document.querySelector("#bar-chart"),
+      chartConfig
+    )
+
+    chart.render()
+  </script>
+  <!--  -->
+</div>
+{% endblock %}

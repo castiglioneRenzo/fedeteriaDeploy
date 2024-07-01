@@ -1,0 +1,74 @@
+{% extends 'basic-structure-w-sidebar.html' %}
+{% load static %}
+{% block title %}
+<title>Ver Perfil | Fedeteria</title>
+{% endblock %} 
+{% block second_navbar %}
+<a
+  href="/perfil"
+  class="font-semibold text-gray-400 hover:underline"
+>
+  Perfil
+</a>
+
+{% endblock %} 
+{% block main %}
+<!-- <script>
+    async function getImagenProducto(id){
+      try {
+        const url = 'http://127.0.0.1:8000/api/v1/imgprincipal/' + id;
+        const response = await fetch(url);
+        if(!response.ok){
+          throw new Error("Error en la solicitud" + id);
+        }
+        //response.text().then((value) => {console.log(value);});
+        return response.json();
+      } catch (error) {
+        console.log(error)
+      }
+    }
+</script>  -->
+  <!-- <div class="row-start-1 row-span-1">
+    <h1 class="text-2xl font-semibold">Promocionar Producto</h1>
+    <p class="text-sm text-gray-500">
+        Promociona tu producto para que más personas lo vean y puedan comprarlo.
+    </p>
+  </div> -->
+
+
+<!--  -->
+
+  <div class="flex items-baseline justify-between border-b border-neutral-400 pt-6 pb-8 mb-8">
+    <div class="flex flex-col space-y-4"> 
+      <h1 class="text-4xl font-bold tracking-tight text-neutral-900">
+        Promocionar Producto
+      </h1>
+      <p class="text-sm text-gray-500">
+        Promociona tu producto para que más personas lo vean y puedan comprarlo.
+      </p> 
+    </div>    
+  </div>  
+
+
+<!--  -->
+
+
+<div class="flex items-center">  
+  <div class="border rounded-md p-8 bg-gray-100 shadow-md md:px-32 md:py-8">
+    <div class="grid grid-cols-2 gap-x-4 divide-x-8">
+        
+        <div class="px-8">
+            <h1 class="text-2xl font-semibold">Promocionar Producto</h1>
+            <form method="POST" enctype="multipart/form-data">{% csrf_token %}                
+                <button 
+                  type="submit"                  
+                  class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-orange-400 px-8 py-3 text-base font-medium text-white hover:bg-orange-600 transition-colors"
+                >
+                    Pagar
+              </button>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

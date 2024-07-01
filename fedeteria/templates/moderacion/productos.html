@@ -1,0 +1,196 @@
+{% extends 'basic-structure-moderacion.html' %}{% block title %}
+<title>Productos sin precio | Moderacion | Fedeteria</title>
+{% endblock %} {% block second_navbar %}
+<a
+  href="/moderacion"
+  class="font-semibold text-neutral-400 hover:underline"
+>
+  Moderacion
+</a>
+
+<span class="mx-5 font-bold text-neutral-500"> / </span>
+
+<a
+  href="/moderacion/productos"
+  class="font-semibold text-neutral-400 hover:underline"
+>
+  Productos sin precio
+</a>
+{% endblock %} {% block main %}
+<div
+  class="max-w-[95vw] sm:max-w-5xl w-full border py-8 px-2 sm:px-16 rounded-lg bg-neutral-100 shadow-md"
+>
+  <h1 class="font-semibold tracking-wide underline text-2xl mb-4">
+    Productos sin precio
+  </h1>
+  {% if messages %} {% for message in messages %}
+  <div>
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div
+      class="bg-red-500 text-white p-4 rounded-lg shadow-md"
+      role="alert"
+    >
+      {{ message }}
+    </div>
+    {% else %}
+    <div
+      class="bg-green-500 text-white p-4 rounded-lg shadow-md"
+      role="alert"
+    >
+      {{ message }}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %} {% endif %} {% if productos %}
+  <ul
+    role="list"
+    class=""
+  >
+    {% for producto in productos %}
+    <li
+      class="relative group flex justify-between gap-x-6 py-5 px-2 flex-wrap transition-all duration-200 ease-in mb-4 rounded-lg bg-neutral-200 hover:bg-neutral-300"
+    >
+      <div
+        class="flex flex-wrap sm:flex-nowrap justify-between basis-full w-full"
+      >
+        <div class="flex min-w-0 gap-x-4">
+          <img
+            class="h-32 w-32 flex-none rounded-md bg-neutral-50 object-cover"
+            src="{{ producto.imagen }}"
+            alt=""
+          />
+          <div class="min-w-0 flex flex-col flex-auto justify-between">
+            <p
+              class="h-6 overflow-hidden text-sm truncate font-semibold leading-6 text-neutral-900"
+            >
+              {{producto.p.nombre}}
+            </p>
+            <p
+              class="h-16 overflow-hidden mt-1 text-xs leading-4 text-neutral-500"
+            >
+              {{producto.p.descripcion}}
+            </p>
+            <ul class="flex justify-start items-center gap-2 overflow-hidden">
+              {% for categoria in producto.categorias %}
+              <li
+                class="bg-neutral-800 text-neutral-200 rounded-md text-xs h-fit px-2 py-0.5"
+              >
+                {{categoria}}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div
+          class="shrink-0 content-end flex flex-row-reverse w-full justify-between sm:w-fit sm:justify-start sm:flex-col sm:items-end pl-4"
+        >
+          <!-- <p
+            class="text-lg font-semibold leading-6 tracking-wider text-neutral-900"
+          >
+            {% if producto.p.precio is None %} $ --- {% else %} $
+            {{producto.p.precio}} {% endif %}
+          </p> -->
+          <p class="text-base font-medium text-gray-500">
+            {{producto.p.estado_producto.nombre}}
+          </p>
+
+          <div class="mt-1 flex items-center gap-x-1.5">
+            {% if producto.p.estado_publicacion == "Pausado" %}
+            <div class="flex-none rounded-full bg-blue-500/20 p-1">
+              <div class="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
+            </div>
+            {% else %}
+            <div class="flex-none rounded-full bg-emerald-500/20 p-1">
+              <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+            </div>
+            {% endif %}
+
+            <p class="text-xs leading-5 text-neutral-500">
+              {{producto.p.estado_publicacion}}
+            </p>
+          </div>
+
+          <p class="mt-1 text-xs leading-5 text-neutral-500">
+            Subido {{ producto.tiempo_publicacion }}
+          </p>
+        </div>
+      </div>
+      <form
+        method="post"
+        class="max-w-sm mx-auto flex gap-2 items-center mt-4"
+      >
+        {% csrf_token %}
+        <div class="relative">
+          <!-- <label
+            for="cat_precio"
+            class="absolute -top-2 left-2 block text-xs font-medium text-neutral-900 bg-white rounded px-1 py-[1px]"
+            ></label
+          > -->
+          <select
+            name="cat_precio"
+            id="cat_precio"
+            class="bg-neutral-50 pr-2 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block max-w-sm w-full p-2.5 px-4"
+            required
+          >
+            <option
+              selected
+              disabled
+              value=""
+            >
+              Selecciona un precio
+            </option>
+            {% for precio in cat_precios %}
+            <option value="{{ precio.id }}">
+              {{ precio.nombre }} - ({{ precio.rango }})
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <input
+          type="hidden"
+          name="producto_id"
+          value="{{ producto.p.id }}"
+        />
+        <button
+          type="submit"
+          class="group/link flex w-48 items-center justify-center gap-2 px-4 py-2 text-base font-medium text-orange-600 transition-all duration-300 transform bg-orange-200 rounded hover:bg-orange-400 hover:text-orange-900 focus:bg-orange-400 focus:outline-none"
+        >
+          Establecer precio
+        </button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="min-h-64 py-8 px-8 w-full flex flex-col items-center gap-4">
+    <p>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-24 w-24 text-neutral-500"
+      >
+        <path
+          stroke="none"
+          d="M0 0h24v24H0z"
+          fill="none"
+        />
+        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+        <path d="M9 13h.01" />
+        <path d="M15 13h.01" />
+        <path d="M11 17h2" />
+      </svg>
+    </p>
+    <h3 class="text-lg font-medium text-neutral-500">
+      No hay ningun producto para mostrar!
+    </h3>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
