@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirigiendo a MercadoPago</title>
     <script src="{% static 'publico/js/mercado_pago.js' %}"></script>
-    <!-- <script 
+    <!-- <script
             type="text/javascript"
             src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js">
     </script> -->
@@ -29,6 +29,7 @@
      mp.bricks().create("wallet", "wallet_container", {
         initialization: {
             preferenceId: "{{ preference_id }}",
+            redirectMode: "blank"
         },
      customization: {
       texts: {

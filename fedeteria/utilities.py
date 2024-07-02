@@ -123,7 +123,7 @@ def actualizar_calificacion_usuario(usuario_id, nueva_calificacion):
 
 sdk = mercadopago.SDK(settings.MERCADOPAGO_ACCESS_TOKEN)
 
-def create_preference(id, item_title, item_quantity, item_currency_id, item_unit_price):
+def create_preference(id, item_title, item_quantity, item_currency_id, item_unit_price, promocion_id):
     preference_data = {
         "items": [
             {
@@ -135,11 +135,12 @@ def create_preference(id, item_title, item_quantity, item_currency_id, item_unit
             }
         ],
         "back_urls": {
-            "success": "https://www.pythonanywhere.com/promociones/success",
-            "failure": "https://www.pythonanywhere.com/promociones/failure",
-            "pending": "https://www.pythonanywhere.com/promociones/pending"
+            "success": "https://fedeteria.pythonanywhere.com/promociones/success",
+            "failure": "https://fedeteria.pythonanywhere.com/promociones/failure",
+            "pending": "https://fedeteria.pythonanywhere.com/promociones/pending"
         },
         "auto_return": "approved",
+        "external_reference": promocion_id,
     }
     preference_response = sdk.preference().create(preference_data)
     return preference_response["response"]

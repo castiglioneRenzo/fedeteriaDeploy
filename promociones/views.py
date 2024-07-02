@@ -27,12 +27,13 @@ def promocionar_producto(request, idProducto):
         item_currency_id = "ARS"
         item_unit_price = getPrecioPromocion(int(request.POST['duracion']))
 
-        preference = create_preference(promocion.id, item_title, item_quantity, item_currency_id, item_unit_price)
-
-        return render(request, 'pago/payment.html', {
-            'preference_id': preference['id'],
-            'public_key': settings.MERCADOPAGO_PUBLIC_KEY,
-        })
+        preference = create_preference(promocion.id, item_title, item_quantity, item_currency_id, item_unit_price, promocion.id)
+        print(preference['init_point'])
+        return redirect(preference['init_point'])
+        # return render(request, 'pago/payment.html', {
+        #     'preference_id': preference['id'],
+        #     'public_key': settings.MERCADOPAGO_PUBLIC_KEY,
+        # })
     return render(request, 'promociones/promocionar_producto.html', {'producto': producto})
 
 @login_required(login_url='publico:login')
@@ -76,10 +77,29 @@ def payment_view(request):
     return render(request, 'pago/checkout.html')
 
 def success_view(request):
+    status = request.GET.get('status')
+    external_reference = request.GET.get('external_reference')
+    print(status)
+    print(external_reference)
+    promocion = Promocion.objects.get(id=external_reference)
+    promocion.estado_pago = 'Pagado'
+    promocion.save()
     return render(request, 'pago/success.html')
 
 def failure_view(request):
+    payment_id = request.GET.get('payment_id')
+    status = request.GET.get('status')
+    merchant_order_id = request.GET.get('merchant_order_id')
+    print(payment_id)
+    print(status)
+    print(merchant_order_id)
     return render(request, 'pago/failure.html')
 
 def pending_view(request):
+    payment_id = request.GET.get('payment_id')
+    status = request.GET.get('status')
+    merchant_order_id = request.GET.get('merchant_order_id')
+    print(payment_id)
+    print(status)
+    print(merchant_order_id)
     return render(request, 'pago/pending.html')
